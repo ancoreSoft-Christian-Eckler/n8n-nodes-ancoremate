@@ -1,0 +1,62 @@
+{
+  "name": "n8n-nodes-ancoremate",
+  "version": "1.15.0",
+  "description": "n8n nodes for Qlik Cloud® automation by ancoreSoft. Qlik®, Qlik Cloud® and Qlik Sense® are trademarks of QlikTech International AB. ancoreMate is not affiliated with or endorsed by Qlik.",
+  "keywords": [
+    "n8n-community-node-package",
+    "ancoremate",
+    "qlik",
+    "qlik-cloud"
+  ],
+  "license": "MIT",
+  "homepage": "https://ancorecloud.com/",
+  "author": {
+    "name": "ancoreSoft",
+    "email": "support@ancoresoft.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ancoreSoft-Christian-Eckler/n8n-nodes-ancoremate.git"
+  },
+  "engines": {
+    "node": ">=20.15"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\" && tsc && node build-assets.mjs",
+    "lint": "n8n-node lint",
+    "prepublishOnly": "npm run build"
+  },
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/AncoreMateOAuth2Api.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/AncoreMateApps/AncoreMateApps.node.js",
+      "dist/nodes/AncoreMateReloads/AncoreMateReloads.node.js",
+      "dist/nodes/AncoreMateAppData/AncoreMateAppData.node.js",
+      "dist/nodes/AncoreMateSpacesAndAccess/AncoreMateSpacesAndAccess.node.js",
+      "dist/nodes/AncoreMateContent/AncoreMateContent.node.js",
+      "dist/nodes/AncoreMateCatalog/AncoreMateCatalog.node.js",
+      "dist/nodes/AncoreMateAutomations/AncoreMateAutomations.node.js",
+      "dist/nodes/AncoreShare/AncoreShare.node.js",
+      "dist/nodes/AncoreMateAppsTrigger/AncoreMateAppsTrigger.node.js",
+      "dist/nodes/AncoreMateReloadsTrigger/AncoreMateReloadsTrigger.node.js",
+      "dist/nodes/AncoreMateAutomationsTrigger/AncoreMateAutomationsTrigger.node.js",
+      "dist/nodes/AncoreShareTrigger/AncoreShareTrigger.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "0.50.4",
+    "@types/node": "20.19.43",
+    "eslint": "9.39.4",
+    "n8n-workflow": "2.16.0",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}

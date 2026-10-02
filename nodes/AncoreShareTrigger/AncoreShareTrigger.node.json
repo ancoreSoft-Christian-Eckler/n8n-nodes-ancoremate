@@ -1,0 +1,21 @@
+{
+  "node": "n8n-nodes-ancoremate.ancoreShareTrigger",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": [
+    "Analytics",
+    "Data & Storage"
+  ],
+  "resources": {
+    "credentialDocumentation": [
+      {
+        "url": "https://docs.ancoresoft.com/"
+      }
+    ],
+    "primaryDocumentation": [
+      {
+        "url": "https://docs.ancoresoft.com/"
+      }
+    ]
+  }
+}
