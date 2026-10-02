@@ -211,7 +211,7 @@ export async function runOperations(
 					results.push({ json: entry, pairedItem: { item: i } });
 				}
 			} else {
-				results.push({ json: result ?? { success: true }, pairedItem: { item: i } });
+				results.push({ json: result ?? (spec.method === 'DELETE' ? { deleted: true } : { success: true }), pairedItem: { item: i } });
 			}
 		} catch (error) {
 			if (this.continueOnFail()) {

@@ -16,6 +16,48 @@ In n8n, open **Settings > Community nodes**, select **Install** and enter `n8n-n
 
 No client ID, client secret or API key has to be entered, neither in n8n nor in Qlik Cloud.
 
+## Usage
+
+Each node covers one area of Qlik Cloud. Choose the resource and the operation; lists of apps, spaces, sheets and other objects are loaded from your tenant. All actions run as the connected Qlik Cloud user and see only what this user may see.
+
+- Files that a node returns (exports, reports, QVF files) are put into the binary field named in **Put Output File in Field** (default `data`), ready for nodes such as Gmail, Google Drive or Write Binary File.
+- Files that a node sends (imports, uploads) are taken from the binary field named in **Input Binary Field**.
+- Long-running operations such as reloads and exports wait for Qlik Cloud to finish and return the result.
+- **Send Qlik Cloud Request** calls any Qlik Cloud REST endpoint below `/api/v1/` with the same sign-in.
+- The trigger nodes register a webhook with ancoreMate when the workflow is activated and remove it when the workflow is deactivated.
+
+## Example workflows
+
+**Send a sheet as PDF every morning**
+
+1. Schedule Trigger: every weekday at 7:00.
+2. ancoreMate App Data, resource Report, operation **Export Sheet**: choose the app and the sheet, format PDF. The PDF is in the binary field `data`.
+3. Gmail, operation **Send**: add the attachment `data`.
+
+**Reload an app and report failures**
+
+1. Schedule Trigger: every night.
+2. ancoreMate Reloads, resource Reload, operation **Reload App and Wait**: choose the app.
+3. If: `{{ $json.status }}` is not `SUCCEEDED`, send a message with Slack, Microsoft Teams or e-mail.
+
+**Copy data to Google Sheets after each reload**
+
+1. ancoreMate Reloads Trigger, event **When an app reload finishes**: choose the app.
+2. ancoreMate App Data, resource Data, operation **Get Table Data**: choose the app and the table object.
+3. Google Sheets, operation **Append or Update Row**.
+
+**Store ancoreShare reports in a folder**
+
+1. ancoreMate ancoreShare Reports Trigger, event **When an ancoreShare report is finished**: enter the ancoreMate key of the report button.
+2. ancoreMate ancoreShare Reports, operation **Download Report Files**: one item per file.
+3. Google Drive or Microsoft OneDrive, operation **Upload**.
+
+## Documentation and support
+
+- Documentation: https://docs.ancoresoft.com/
+- Support: support@ancoresoft.com
+- Qlik Cloud REST API: https://qlik.dev/apis/
+
 ## Nodes
 
 ### ancoreMate Apps

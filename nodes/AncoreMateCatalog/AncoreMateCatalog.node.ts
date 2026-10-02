@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.15.0';
+const CLIENT = 'n8n/1.15.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"changeGlossaryTermStatus": {
@@ -1373,31 +1373,31 @@ export class AncoreMateCatalog implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create data asset",
+						"name": "Create",
 						"value": "createDataAsset",
 						"action": "Create data asset",
 						"description": "Creates a data asset in a data store."
 					},
 					{
-						"name": "Delete data asset",
+						"name": "Delete",
 						"value": "deleteDataAsset",
 						"action": "Delete data asset",
 						"description": "Deletes a data asset."
 					},
 					{
-						"name": "Get data asset",
+						"name": "Get",
 						"value": "getDataAsset",
 						"action": "Get data asset",
 						"description": "Returns a data asset."
 					},
 					{
-						"name": "List data assets",
+						"name": "Get Many",
 						"value": "listDataAssets",
 						"action": "List data assets",
 						"description": "Lists the data assets of a data store."
 					},
 					{
-						"name": "Update data asset",
+						"name": "Update",
 						"value": "updateDataAsset",
 						"action": "Update data asset",
 						"description": "Replaces the attributes of a data asset."
@@ -1419,25 +1419,25 @@ export class AncoreMateCatalog implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create data store",
+						"name": "Create",
 						"value": "createDataStore",
 						"action": "Create data store",
 						"description": "Creates a data store in the catalog."
 					},
 					{
-						"name": "Get data store",
+						"name": "Get",
 						"value": "getDataStore",
 						"action": "Get data store",
 						"description": "Returns a data store."
 					},
 					{
-						"name": "List data stores",
+						"name": "Get Many",
 						"value": "listDataStores",
 						"action": "List data stores",
 						"description": "Lists the data stores of the catalog."
 					},
 					{
-						"name": "Update data store",
+						"name": "Update",
 						"value": "updateDataStore",
 						"action": "Update data store",
 						"description": "Replaces the attributes of a data store."
@@ -1459,31 +1459,31 @@ export class AncoreMateCatalog implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create dataset",
+						"name": "Create",
 						"value": "createDataset",
 						"action": "Create dataset",
 						"description": "Creates a dataset in a data asset."
 					},
 					{
-						"name": "Delete dataset",
+						"name": "Delete",
 						"value": "deleteDataset",
 						"action": "Delete dataset",
 						"description": "Deletes a dataset."
 					},
 					{
-						"name": "Get dataset",
+						"name": "Get",
 						"value": "getDataset",
 						"action": "Get dataset",
 						"description": "Returns a dataset with its schema."
 					},
 					{
-						"name": "List datasets",
+						"name": "Get Many",
 						"value": "listDatasets",
 						"action": "List datasets",
 						"description": "Lists the datasets of a data asset."
 					},
 					{
-						"name": "Update dataset",
+						"name": "Update",
 						"value": "updateDataset",
 						"action": "Update dataset",
 						"description": "Replaces the attributes of a dataset."
@@ -1505,43 +1505,43 @@ export class AncoreMateCatalog implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create glossary",
+						"name": "Create",
 						"value": "createGlossary",
 						"action": "Create glossary",
 						"description": "Creates a business glossary."
 					},
 					{
-						"name": "Delete glossary",
+						"name": "Delete",
 						"value": "deleteGlossary",
 						"action": "Delete glossary",
 						"description": "Deletes a glossary with its categories and terms."
 					},
 					{
-						"name": "Export glossary",
+						"name": "Export",
 						"value": "exportGlossary",
 						"action": "Export glossary",
 						"description": "Exports a glossary with its categories and terms as JSON."
 					},
 					{
-						"name": "Get glossary",
+						"name": "Get",
 						"value": "getGlossary",
 						"action": "Get glossary",
 						"description": "Returns a business glossary."
 					},
 					{
-						"name": "Import glossary",
+						"name": "Import",
 						"value": "importGlossary",
 						"action": "Import glossary",
 						"description": "Creates a glossary from an exported glossary."
 					},
 					{
-						"name": "List glossaries",
+						"name": "Get Many",
 						"value": "listGlossaries",
 						"action": "List glossaries",
 						"description": "Lists the business glossaries."
 					},
 					{
-						"name": "Update glossary",
+						"name": "Update",
 						"value": "updateGlossary",
 						"action": "Update glossary",
 						"description": "Replaces the name, description and settings of a glossary."
@@ -1563,31 +1563,31 @@ export class AncoreMateCatalog implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create glossary category",
+						"name": "Create",
 						"value": "createGlossaryCategory",
 						"action": "Create glossary category",
 						"description": "Creates a category in a glossary."
 					},
 					{
-						"name": "Delete glossary category",
+						"name": "Delete",
 						"value": "deleteGlossaryCategory",
 						"action": "Delete glossary category",
 						"description": "Deletes a category of a glossary."
 					},
 					{
-						"name": "Get glossary category",
+						"name": "Get",
 						"value": "getGlossaryCategory",
 						"action": "Get glossary category",
 						"description": "Returns a category of a glossary."
 					},
 					{
-						"name": "List glossary categories",
+						"name": "Get Many",
 						"value": "listGlossaryCategories",
 						"action": "List glossary categories",
 						"description": "Lists the categories of a glossary."
 					},
 					{
-						"name": "Update glossary category",
+						"name": "Update",
 						"value": "updateGlossaryCategory",
 						"action": "Update glossary category",
 						"description": "Replaces the name and description of a glossary category."
@@ -1609,37 +1609,37 @@ export class AncoreMateCatalog implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Change glossary term status",
+						"name": "Change Status",
 						"value": "changeGlossaryTermStatus",
 						"action": "Change glossary term status",
 						"description": "Sets the status of a glossary term, for example verified."
 					},
 					{
-						"name": "Create glossary term",
+						"name": "Create",
 						"value": "createGlossaryTerm",
 						"action": "Create glossary term",
 						"description": "Creates a term in a glossary."
 					},
 					{
-						"name": "Delete glossary term",
+						"name": "Delete",
 						"value": "deleteGlossaryTerm",
 						"action": "Delete glossary term",
 						"description": "Deletes a term of a glossary."
 					},
 					{
-						"name": "Get glossary term",
+						"name": "Get",
 						"value": "getGlossaryTerm",
 						"action": "Get glossary term",
 						"description": "Returns a term of a glossary."
 					},
 					{
-						"name": "List glossary terms",
+						"name": "Get Many",
 						"value": "listGlossaryTerms",
 						"action": "List glossary terms",
 						"description": "Lists the terms of a glossary."
 					},
 					{
-						"name": "Update glossary term",
+						"name": "Update",
 						"value": "updateGlossaryTerm",
 						"action": "Update glossary term",
 						"description": "Replaces the definition and attributes of a glossary term."
@@ -1661,7 +1661,7 @@ export class AncoreMateCatalog implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get Qlik connection",
+						"name": "Get Qlik Connection",
 						"value": "getQlikConnection",
 						"action": "Get Qlik connection",
 						"description": "Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user."
@@ -1683,7 +1683,7 @@ export class AncoreMateCatalog implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Send Qlik Cloud request",
+						"name": "Send Qlik Cloud Request",
 						"value": "sendQlikCloudRequest",
 						"action": "Send Qlik Cloud request",
 						"description": "Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own."
@@ -2885,14 +2885,14 @@ export class AncoreMateCatalog implements INodeType {
 						"name": "importerAsFallbackSteward",
 						"type": "boolean",
 						"default": false,
-						"description": "Appending the current importer user as steward to categories/terms where no steward is defined/not match the identity service."
+						"description": "Whether to add the importing user as steward to categories and terms that have no steward or whose steward is not found."
 					},
 					{
 						"displayName": "Lookup User On Email",
 						"name": "lookupUserOnEmail",
 						"type": "boolean",
 						"default": false,
-						"description": "Using email in the steward fields to lookup userIds in the identity service."
+						"description": "Whether to look up the stewards by the e-mail addresses in the steward fields."
 					},
 					{
 						"displayName": "Space ID",

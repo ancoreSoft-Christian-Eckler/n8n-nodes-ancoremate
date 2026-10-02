@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.15.0';
+const CLIENT = 'n8n/1.15.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"addSpaceMember": {
@@ -728,13 +728,13 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get group",
+						"name": "Get",
 						"value": "getGroup",
 						"action": "Get group",
 						"description": "Returns a group of the tenant."
 					},
 					{
-						"name": "List groups",
+						"name": "Get Many",
 						"value": "listGroups",
 						"action": "List groups",
 						"description": "Lists the groups of the tenant. Use the filter to search, for example name eq \"Finance\"."
@@ -756,31 +756,31 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create or update space",
+						"name": "Create or Update Space",
 						"value": "createOrUpdateSpace",
 						"action": "Create or update space",
 						"description": "Creates a space, or updates the name and description of an existing space when a space ID is given."
 					},
 					{
-						"name": "Delete space",
+						"name": "Delete",
 						"value": "deleteSpace",
 						"action": "Delete space",
 						"description": "Deletes a space. The space must be empty."
 					},
 					{
-						"name": "Get space",
+						"name": "Get",
 						"value": "getSpace",
 						"action": "Get space",
 						"description": "Returns a space with its settings."
 					},
 					{
-						"name": "List space types",
+						"name": "Get Many Types",
 						"value": "listSpaceTypes",
 						"action": "List space types",
 						"description": "Lists the types of spaces available in the tenant."
 					},
 					{
-						"name": "List spaces",
+						"name": "Get Many",
 						"value": "listSpaces",
 						"action": "List spaces",
 						"description": "Lists the spaces the connected Qlik Cloud user can see."
@@ -802,49 +802,49 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Add space member",
+						"name": "Add",
 						"value": "addSpaceMember",
 						"action": "Add space member",
 						"description": "Assigns a user or group to a space with the given roles."
 					},
 					{
-						"name": "Add space member roles",
+						"name": "Add Roles",
 						"value": "addSpaceMemberRoles",
 						"action": "Add space member roles",
 						"description": "Adds roles to a user or group in a space and keeps the existing roles; adds the member when needed."
 					},
 					{
-						"name": "Get space member",
+						"name": "Get",
 						"value": "getSpaceMember",
 						"action": "Get space member",
 						"description": "Returns one assignment of a user or group to a space."
 					},
 					{
-						"name": "List space members",
+						"name": "Get Many",
 						"value": "listSpaceMembers",
 						"action": "List space members",
 						"description": "Lists the users and groups assigned to a space with their roles."
 					},
 					{
-						"name": "Remove space member",
+						"name": "Remove",
 						"value": "removeSpaceMember",
 						"action": "Remove space member",
 						"description": "Removes a user or group from a space."
 					},
 					{
-						"name": "Remove space member roles",
+						"name": "Remove Roles",
 						"value": "removeSpaceMemberRoles",
 						"action": "Remove space member roles",
 						"description": "Removes roles from a user or group in a space; without remaining roles the member is removed from the space."
 					},
 					{
-						"name": "Set space member",
+						"name": "Set",
 						"value": "setSpaceMember",
 						"action": "Set space member",
 						"description": "Gives a user or group exactly the given roles in a space and adds the member when needed."
 					},
 					{
-						"name": "Update space member",
+						"name": "Update",
 						"value": "updateSpaceMember",
 						"action": "Update space member",
 						"description": "Replaces the roles of a user or group in a space."
@@ -866,31 +866,31 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create space share",
+						"name": "Create",
 						"value": "createSpaceShare",
 						"action": "Create space share",
 						"description": "Shares an item of a space with a user or group."
 					},
 					{
-						"name": "Delete space share",
+						"name": "Delete",
 						"value": "deleteSpaceShare",
 						"action": "Delete space share",
 						"description": "Removes a share from a space."
 					},
 					{
-						"name": "Get space share",
+						"name": "Get",
 						"value": "getSpaceShare",
 						"action": "Get space share",
 						"description": "Returns one share of a space."
 					},
 					{
-						"name": "List space shares",
+						"name": "Get Many",
 						"value": "listSpaceShares",
 						"action": "List space shares",
 						"description": "Lists the items shared directly from a space."
 					},
 					{
-						"name": "Update space share",
+						"name": "Update",
 						"value": "updateSpaceShare",
 						"action": "Update space share",
 						"description": "Changes the roles of a share."
@@ -912,7 +912,7 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get tenant",
+						"name": "Get",
 						"value": "getTenant",
 						"action": "Get tenant",
 						"description": "Returns the name, hostnames and status of the tenant."
@@ -934,19 +934,19 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get current user",
+						"name": "Get Current User",
 						"value": "getCurrentUser",
 						"action": "Get current user",
 						"description": "Returns the Qlik Cloud user ancoreMate is connected with."
 					},
 					{
-						"name": "Get user",
+						"name": "Get",
 						"value": "getUser",
 						"action": "Get user",
 						"description": "Returns a user of the tenant."
 					},
 					{
-						"name": "List users",
+						"name": "Get Many",
 						"value": "listUsers",
 						"action": "List users",
 						"description": "Lists the users of the tenant. Use the filter to search, for example name co \"anna\"."
@@ -968,7 +968,7 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get Qlik connection",
+						"name": "Get Qlik Connection",
 						"value": "getQlikConnection",
 						"action": "Get Qlik connection",
 						"description": "Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user."
@@ -990,7 +990,7 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Send Qlik Cloud request",
+						"name": "Send Qlik Cloud Request",
 						"value": "sendQlikCloudRequest",
 						"action": "Send Qlik Cloud request",
 						"description": "Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own."
@@ -1664,7 +1664,7 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 						"name": "systemGroups",
 						"type": "boolean",
 						"default": false,
-						"description": "Return system groups (e.g."
+						"description": "Whether to return system groups such as Everyone instead of regular groups."
 					},
 					{
 						"displayName": "Limit",

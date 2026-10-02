@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.15.0';
+const CLIENT = 'n8n/1.15.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"createBookmark": {
@@ -1135,37 +1135,37 @@ export class AncoreMateAppData implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create bookmark",
+						"name": "Create",
 						"value": "createBookmark",
 						"action": "Create bookmark",
 						"description": "Saves selections as a bookmark, optionally published."
 					},
 					{
-						"name": "Delete bookmark",
+						"name": "Delete",
 						"value": "deleteBookmark",
 						"action": "Delete bookmark",
 						"description": "Deletes a bookmark."
 					},
 					{
-						"name": "List bookmarks",
+						"name": "Get Many",
 						"value": "listBookmarks",
 						"action": "List bookmarks",
 						"description": "Lists the bookmarks of an app."
 					},
 					{
-						"name": "Publish bookmark",
+						"name": "Publish",
 						"value": "publishBookmark",
 						"action": "Publish bookmark",
 						"description": "Publishes a bookmark for the other users of the app."
 					},
 					{
-						"name": "Unpublish bookmark",
+						"name": "Unpublish",
 						"value": "unpublishBookmark",
 						"action": "Unpublish bookmark",
 						"description": "Makes a published bookmark private again."
 					},
 					{
-						"name": "Update bookmark",
+						"name": "Update",
 						"value": "updateBookmark",
 						"action": "Update bookmark",
 						"description": "Changes the title or description of a bookmark."
@@ -1187,25 +1187,25 @@ export class AncoreMateAppData implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Evaluate expression",
+						"name": "Evaluate Expression",
 						"value": "evaluateExpression",
 						"action": "Evaluate expression",
 						"description": "Calculates an expression such as Sum(Sales) with the given selections."
 					},
 					{
-						"name": "Get measure value",
+						"name": "Get Measure Value",
 						"value": "getMeasureValue",
 						"action": "Get measure value",
 						"description": "Calculates a master measure with the given selections."
 					},
 					{
-						"name": "Get table data",
+						"name": "Get Table Data",
 						"value": "getTableData",
 						"action": "Get table data",
 						"description": "Returns the rows of a table or chart of the app with the given selections."
 					},
 					{
-						"name": "Get table data for fields",
+						"name": "Get Table Data for Fields",
 						"value": "getTableDataForFields",
 						"action": "Get table data for fields",
 						"description": "Builds a table from dimensions and measures and returns its rows with the given selections."
@@ -1227,19 +1227,19 @@ export class AncoreMateAppData implements INodeType {
 				},
 				"options": [
 					{
-						"name": "List field values",
+						"name": "Get Many Values",
 						"value": "listFieldValues",
 						"action": "List field values",
 						"description": "Lists the values of a field, optionally only those possible with the given selections."
 					},
 					{
-						"name": "List fields",
+						"name": "Get Many",
 						"value": "getAppFields",
 						"action": "List fields",
 						"description": "Lists the fields of the data model of a Qlik Sense app with their number of distinct values and tags."
 					},
 					{
-						"name": "Set always one selected value",
+						"name": "Set Always One Selected Value",
 						"value": "setAlwaysOneSelectedValue",
 						"action": "Set always one selected value",
 						"description": "Switches the setting that a field always has exactly one selected value."
@@ -1261,31 +1261,31 @@ export class AncoreMateAppData implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create or update master dimension",
+						"name": "Create or Update Master Dimension",
 						"value": "createOrUpdateDimension",
 						"action": "Create or update master dimension",
 						"description": "Creates a master dimension for a field, or updates the dimension when a dimension ID is given."
 					},
 					{
-						"name": "Delete master dimension",
+						"name": "Delete",
 						"value": "deleteDimension",
 						"action": "Delete master dimension",
 						"description": "Deletes a master dimension."
 					},
 					{
-						"name": "Get master dimension",
+						"name": "Get",
 						"value": "getDimension",
 						"action": "Get master dimension",
 						"description": "Returns the properties of a master dimension."
 					},
 					{
-						"name": "List master dimension values",
+						"name": "Get Many Values",
 						"value": "listDimensionValues",
 						"action": "List master dimension values",
 						"description": "Lists the values of a master dimension, optionally with selections."
 					},
 					{
-						"name": "List master dimensions",
+						"name": "Get Many",
 						"value": "listDimensions",
 						"action": "List master dimensions",
 						"description": "Lists the master dimensions of an app."
@@ -1307,25 +1307,25 @@ export class AncoreMateAppData implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create or update master measure",
+						"name": "Create or Update Master Measure",
 						"value": "createOrUpdateMeasure",
 						"action": "Create or update master measure",
 						"description": "Creates a master measure, or updates the measure when a measure ID is given."
 					},
 					{
-						"name": "Delete master measure",
+						"name": "Delete",
 						"value": "deleteMeasure",
 						"action": "Delete master measure",
 						"description": "Deletes a master measure."
 					},
 					{
-						"name": "Get master measure",
+						"name": "Get",
 						"value": "getMeasure",
 						"action": "Get master measure",
 						"description": "Returns the properties of a master measure."
 					},
 					{
-						"name": "List master measures",
+						"name": "Get Many",
 						"value": "listMeasures",
 						"action": "List master measures",
 						"description": "Lists the master measures of an app with their expressions."
@@ -1347,19 +1347,19 @@ export class AncoreMateAppData implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get object properties",
+						"name": "Get Properties",
 						"value": "getObjectProperties",
 						"action": "Get object properties",
 						"description": "Returns all properties of an object such as a chart, as the Qlik associative engine stores them."
 					},
 					{
-						"name": "List master visualizations",
+						"name": "Get Many Master Visualizations",
 						"value": "listMasterVisualizations",
 						"action": "List master visualizations",
 						"description": "Lists the master visualizations of an app."
 					},
 					{
-						"name": "List stories",
+						"name": "Get Many Stories",
 						"value": "listStories",
 						"action": "List stories",
 						"description": "Lists the stories of an app."
@@ -1381,31 +1381,31 @@ export class AncoreMateAppData implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create report from template",
+						"name": "Create from Template",
 						"value": "createTemplateReport",
 						"action": "Create report from template",
 						"description": "Creates a report from a report template, for example Excel or PixelPerfect, in the format of the template or as PDF."
 					},
 					{
-						"name": "Export chart",
+						"name": "Export Chart",
 						"value": "exportChart",
 						"action": "Export chart",
 						"description": "Exports a chart as PNG image or PDF file, with optional selections."
 					},
 					{
-						"name": "Export chart data",
+						"name": "Export Chart Data",
 						"value": "exportChartData",
 						"action": "Export chart data",
 						"description": "Exports the data of a table or chart as Excel file, with optional selections."
 					},
 					{
-						"name": "Export sheet",
+						"name": "Export Sheet",
 						"value": "exportSheet",
 						"action": "Export sheet",
 						"description": "Exports a sheet as PDF or PowerPoint file, with optional selections."
 					},
 					{
-						"name": "List report templates",
+						"name": "Get Many Templates",
 						"value": "listReportTemplates",
 						"action": "List report templates",
 						"description": "Lists the report templates, for example Excel or PixelPerfect, optionally of one app."
@@ -1427,37 +1427,37 @@ export class AncoreMateAppData implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Delete sheet",
+						"name": "Delete",
 						"value": "deleteSheet",
 						"action": "Delete sheet",
 						"description": "Deletes a sheet with its objects."
 					},
 					{
-						"name": "Duplicate sheet",
+						"name": "Duplicate",
 						"value": "duplicateSheet",
 						"action": "Duplicate sheet",
 						"description": "Copies a sheet with all its objects within the app."
 					},
 					{
-						"name": "List sheet objects",
+						"name": "Get Many Objects",
 						"value": "listSheetObjects",
 						"action": "List sheet objects",
 						"description": "Lists the charts and tables on a sheet."
 					},
 					{
-						"name": "List sheets",
+						"name": "Get Many",
 						"value": "listSheets",
 						"action": "List sheets",
 						"description": "Lists the sheets of an app with their publishing state."
 					},
 					{
-						"name": "Publish sheet",
+						"name": "Publish",
 						"value": "publishSheet",
 						"action": "Publish sheet",
 						"description": "Publishes a sheet so that other users of the app can see it."
 					},
 					{
-						"name": "Unpublish sheet",
+						"name": "Unpublish",
 						"value": "unpublishSheet",
 						"action": "Unpublish sheet",
 						"description": "Makes a published sheet private again."
@@ -1479,25 +1479,25 @@ export class AncoreMateAppData implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create or update variable",
+						"name": "Create or Update Variable",
 						"value": "createOrUpdateVariable",
 						"action": "Create or update variable",
 						"description": "Creates a variable or changes its definition."
 					},
 					{
-						"name": "Delete variable",
+						"name": "Delete",
 						"value": "deleteVariable",
 						"action": "Delete variable",
 						"description": "Deletes a variable."
 					},
 					{
-						"name": "Get variable",
+						"name": "Get",
 						"value": "getVariable",
 						"action": "Get variable",
 						"description": "Returns a variable with its definition and current value."
 					},
 					{
-						"name": "List variables",
+						"name": "Get Many",
 						"value": "listVariables",
 						"action": "List variables",
 						"description": "Lists the variables of an app with their definitions."
@@ -1519,7 +1519,7 @@ export class AncoreMateAppData implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get Qlik connection",
+						"name": "Get Qlik Connection",
 						"value": "getQlikConnection",
 						"action": "Get Qlik connection",
 						"description": "Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user."
@@ -1541,7 +1541,7 @@ export class AncoreMateAppData implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Send Qlik Cloud request",
+						"name": "Send Qlik Cloud Request",
 						"value": "sendQlikCloudRequest",
 						"action": "Send Qlik Cloud request",
 						"description": "Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own."
@@ -3230,7 +3230,7 @@ export class AncoreMateAppData implements INodeType {
 						"name": "onlyPossible",
 						"type": "boolean",
 						"default": false,
-						"description": "Returns only the values possible with the selections."
+						"description": "Whether to return only the values that are possible with the current selections."
 					},
 					{
 						"displayName": "Limit",
@@ -3344,7 +3344,7 @@ export class AncoreMateAppData implements INodeType {
 						"name": "onlyPossible",
 						"type": "boolean",
 						"default": false,
-						"description": "Returns only the values possible with the selections."
+						"description": "Whether to return only the values that are possible with the current selections."
 					},
 					{
 						"displayName": "Limit",

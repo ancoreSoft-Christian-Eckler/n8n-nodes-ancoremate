@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.15.0';
+const CLIENT = 'n8n/1.15.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -501,37 +501,37 @@ export class AncoreMateReloads implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Cancel reload",
+						"name": "Cancel",
 						"value": "cancelReload",
 						"action": "Cancel reload",
 						"description": "Cancels a reload that is queued or running."
 					},
 					{
-						"name": "Get reload",
+						"name": "Get",
 						"value": "getReload",
 						"action": "Get reload",
 						"description": "Returns a reload with its status, duration and log excerpt."
 					},
 					{
-						"name": "List reloads",
+						"name": "Get Many",
 						"value": "listReloads",
 						"action": "List reloads",
 						"description": "Lists the reloads of an app, newest first."
 					},
 					{
-						"name": "Reload app",
+						"name": "Reload App",
 						"value": "reloadApp",
 						"action": "Reload app",
 						"description": "Starts a reload of an app and returns the reload with its ID and status."
 					},
 					{
-						"name": "Reload app and wait",
+						"name": "Reload App and Wait",
 						"value": "reloadAppAndWait",
 						"action": "Reload app and wait",
 						"description": "Reloads an app and waits until the reload is finished; the result tells whether it succeeded."
 					},
 					{
-						"name": "Wait for reloads",
+						"name": "Wait for Reloads",
 						"value": "waitForReloads",
 						"action": "Wait for reloads",
 						"description": "Waits until the given reloads, for example started in parallel, are finished."
@@ -553,13 +553,13 @@ export class AncoreMateReloads implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get reload log",
+						"name": "Get",
 						"value": "getReloadLog",
 						"action": "Get reload log",
 						"description": "Returns the complete log of a reload as text."
 					},
 					{
-						"name": "List reload logs",
+						"name": "Get Many",
 						"value": "listReloadLogs",
 						"action": "List reload logs",
 						"description": "Lists the stored reload logs of an app."
@@ -581,43 +581,43 @@ export class AncoreMateReloads implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create reload task",
+						"name": "Create",
 						"value": "createReloadTask",
 						"action": "Create reload task",
 						"description": "Creates a reload schedule for an app."
 					},
 					{
-						"name": "Delete reload task",
+						"name": "Delete",
 						"value": "deleteReloadTask",
 						"action": "Delete reload task",
 						"description": "Deletes a reload schedule."
 					},
 					{
-						"name": "Get reload task",
+						"name": "Get",
 						"value": "getReloadTask",
 						"action": "Get reload task",
 						"description": "Returns a reload schedule with its next run."
 					},
 					{
-						"name": "List reload task runs",
+						"name": "Get Many Runs",
 						"value": "listReloadTaskRuns",
 						"action": "List reload task runs",
 						"description": "Lists the runs of a reload task, newest first, with status and short log."
 					},
 					{
-						"name": "List reload tasks",
+						"name": "Get Many",
 						"value": "listReloadTasks",
 						"action": "List reload tasks",
 						"description": "Lists the reload schedules, optionally of one app, with their next run."
 					},
 					{
-						"name": "Start reload task",
+						"name": "Start",
 						"value": "startReloadTask",
 						"action": "Start reload task",
 						"description": "Runs an enabled reload task now, outside its schedule."
 					},
 					{
-						"name": "Update reload task",
+						"name": "Update",
 						"value": "updateReloadTask",
 						"action": "Update reload task",
 						"description": "Changes the schedule of a reload task; values left empty stay as they are."
@@ -639,7 +639,7 @@ export class AncoreMateReloads implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get Qlik connection",
+						"name": "Get Qlik Connection",
 						"value": "getQlikConnection",
 						"action": "Get Qlik connection",
 						"description": "Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user."
@@ -661,7 +661,7 @@ export class AncoreMateReloads implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Send Qlik Cloud request",
+						"name": "Send Qlik Cloud Request",
 						"value": "sendQlikCloudRequest",
 						"action": "Send Qlik Cloud request",
 						"description": "Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own."
@@ -857,7 +857,7 @@ export class AncoreMateReloads implements INodeType {
 						"name": "partial",
 						"type": "boolean",
 						"default": false,
-						"description": "Runs a partial reload."
+						"description": "Whether to run a partial reload."
 					},
 					{
 						"displayName": "Enabled",
@@ -1141,7 +1141,7 @@ export class AncoreMateReloads implements INodeType {
 						"name": "partial",
 						"type": "boolean",
 						"default": false,
-						"description": "The boolean value used to search for a reload is partial or not."
+						"description": "Whether to list partial reloads (on) or full reloads (off)."
 					},
 					{
 						"displayName": "Sort",
@@ -1261,7 +1261,7 @@ export class AncoreMateReloads implements INodeType {
 						"name": "partial",
 						"type": "boolean",
 						"default": false,
-						"description": "The boolean value used to present the reload is partial or not."
+						"description": "Whether the reload is a partial reload."
 					},
 					{
 						"displayName": "Variables",
@@ -1347,7 +1347,7 @@ export class AncoreMateReloads implements INodeType {
 						"name": "partial",
 						"type": "boolean",
 						"default": false,
-						"description": "Runs a partial reload."
+						"description": "Whether to run a partial reload."
 					},
 					{
 						"displayName": "Variables",
@@ -1443,7 +1443,7 @@ export class AncoreMateReloads implements INodeType {
 						"name": "partial",
 						"type": "boolean",
 						"default": false,
-						"description": "Runs a partial reload."
+						"description": "Whether to run a partial reload."
 					},
 					{
 						"displayName": "Enabled",

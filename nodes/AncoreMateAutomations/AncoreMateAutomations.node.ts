@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.15.0';
+const CLIENT = 'n8n/1.15.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"copyAutomation": {
@@ -606,55 +606,55 @@ export class AncoreMateAutomations implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Copy automation",
+						"name": "Copy",
 						"value": "copyAutomation",
 						"action": "Copy automation",
 						"description": "Creates a copy of an automation."
 					},
 					{
-						"name": "Create automation",
+						"name": "Create",
 						"value": "createAutomation",
 						"action": "Create automation",
 						"description": "Creates an automation in Qlik Automate."
 					},
 					{
-						"name": "Delete automation",
+						"name": "Delete",
 						"value": "deleteAutomation",
 						"action": "Delete automation",
 						"description": "Deletes an automation."
 					},
 					{
-						"name": "Disable automation",
+						"name": "Disable",
 						"value": "disableAutomation",
 						"action": "Disable automation",
 						"description": "Disables an automation so that it no longer runs."
 					},
 					{
-						"name": "Enable automation",
+						"name": "Enable",
 						"value": "enableAutomation",
 						"action": "Enable automation",
 						"description": "Enables an automation so that it runs on its triggers again."
 					},
 					{
-						"name": "Get automation",
+						"name": "Get",
 						"value": "getAutomation",
 						"action": "Get automation",
 						"description": "Returns an automation of Qlik Automate."
 					},
 					{
-						"name": "List automations",
+						"name": "Get Many",
 						"value": "listAutomations",
 						"action": "List automations",
 						"description": "Lists the automations of Qlik Automate the connected user can see."
 					},
 					{
-						"name": "Move automation to space",
+						"name": "Move to Space",
 						"value": "moveAutomationToSpace",
 						"action": "Move automation to space",
 						"description": "Moves an automation to another space."
 					},
 					{
-						"name": "Update automation",
+						"name": "Update",
 						"value": "updateAutomation",
 						"action": "Update automation",
 						"description": "Replaces the definition of an automation."
@@ -676,37 +676,37 @@ export class AncoreMateAutomations implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create automation connection",
+						"name": "Create",
 						"value": "createAutomationConnection",
 						"action": "Create automation connection",
 						"description": "Creates a connection for automations."
 					},
 					{
-						"name": "Delete automation connection",
+						"name": "Delete",
 						"value": "deleteAutomationConnection",
 						"action": "Delete automation connection",
 						"description": "Deletes an automation connection."
 					},
 					{
-						"name": "Get automation connection",
+						"name": "Get",
 						"value": "getAutomationConnection",
 						"action": "Get automation connection",
 						"description": "Returns an automation connection."
 					},
 					{
-						"name": "List automation connections",
+						"name": "Get Many",
 						"value": "listAutomationConnections",
 						"action": "List automation connections",
 						"description": "Lists the connections that automations use to reach other services."
 					},
 					{
-						"name": "Move automation connection to space",
+						"name": "Move to Space",
 						"value": "moveAutomationConnectionToSpace",
 						"action": "Move automation connection to space",
 						"description": "Moves an automation connection to another space."
 					},
 					{
-						"name": "Update automation connection",
+						"name": "Update",
 						"value": "updateAutomationConnection",
 						"action": "Update automation connection",
 						"description": "Changes the name or parameters of an automation connection."
@@ -728,37 +728,37 @@ export class AncoreMateAutomations implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Export automation run",
+						"name": "Export",
 						"value": "exportAutomationRun",
 						"action": "Export automation run",
 						"description": "Returns a link to the detailed log of a run."
 					},
 					{
-						"name": "Get automation run",
+						"name": "Get",
 						"value": "getAutomationRun",
 						"action": "Get automation run",
 						"description": "Returns a run of an automation with its status."
 					},
 					{
-						"name": "List automation runs",
+						"name": "Get Many",
 						"value": "listAutomationRuns",
 						"action": "List automation runs",
 						"description": "Lists the runs of an automation, newest first."
 					},
 					{
-						"name": "Retry automation run",
+						"name": "Retry",
 						"value": "retryAutomationRun",
 						"action": "Retry automation run",
 						"description": "Runs a failed run of an automation again."
 					},
 					{
-						"name": "Run automation",
+						"name": "Run Automation",
 						"value": "runAutomation",
 						"action": "Run automation",
 						"description": "Starts a run of an automation."
 					},
 					{
-						"name": "Stop automation run",
+						"name": "Stop",
 						"value": "stopAutomationRun",
 						"action": "Stop automation run",
 						"description": "Stops a running run of an automation."
@@ -780,7 +780,7 @@ export class AncoreMateAutomations implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get Qlik connection",
+						"name": "Get Qlik Connection",
 						"value": "getQlikConnection",
 						"action": "Get Qlik connection",
 						"description": "Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user."
@@ -802,7 +802,7 @@ export class AncoreMateAutomations implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Send Qlik Cloud request",
+						"name": "Send Qlik Cloud Request",
 						"value": "sendQlikCloudRequest",
 						"action": "Send Qlik Cloud request",
 						"description": "Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own."
@@ -1032,7 +1032,7 @@ export class AncoreMateAutomations implements INodeType {
 						"name": "forced",
 						"type": "boolean",
 						"default": false,
-						"description": "When true, the automation connection will be deleted regardless of its usage by any automations."
+						"description": "Whether to delete the automation connection even if automations use it."
 					}
 				]
 			},
@@ -1227,7 +1227,7 @@ export class AncoreMateAutomations implements INodeType {
 						"name": "listAll",
 						"type": "boolean",
 						"default": false,
-						"description": "When true, list all connections."
+						"description": "Whether to list all connections."
 					},
 					{
 						"displayName": "Sort",
@@ -1433,7 +1433,7 @@ export class AncoreMateAutomations implements INodeType {
 						"name": "listAll",
 						"type": "boolean",
 						"default": false,
-						"description": "When true, list all automations."
+						"description": "Whether to list all automations."
 					},
 					{
 						"displayName": "Sort",

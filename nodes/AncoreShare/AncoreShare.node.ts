@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.15.0';
+const CLIENT = 'n8n/1.15.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"downloadAncoreShareFile": {
@@ -299,13 +299,13 @@ export class AncoreShare implements INodeType {
 				},
 				"options": [
 					{
-						"name": "List ancoreShare reports",
+						"name": "Get Many ancoreShare Reports",
 						"value": "listAncoreShareReports",
 						"action": "List ancoreShare reports",
 						"description": "Lists the ancoreShare report buttons of an app with title, export type and tags."
 					},
 					{
-						"name": "Run ancoreShare report",
+						"name": "Run ancoreShare Report",
 						"value": "runAncoreShareReport",
 						"action": "Run ancoreShare report",
 						"description": "Starts an ancoreShare report; ancoreShare queues it and sends the files to the targets of the report button, for example the ancoreMate event."
@@ -327,13 +327,13 @@ export class AncoreShare implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Download report file",
+						"name": "Download Report File",
 						"value": "downloadAncoreShareFile",
 						"action": "Download report file",
 						"description": "Downloads one file of a finished report from its link; links are valid for 12 hours."
 					},
 					{
-						"name": "Download report files",
+						"name": "Download Report Files",
 						"value": "downloadAncoreShareFiles",
 						"action": "Download report files",
 						"description": "Downloads all files of a finished report at once, for example to attach them to one mail."
@@ -355,13 +355,13 @@ export class AncoreShare implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get report usage",
+						"name": "Get Report Usage",
 						"value": "getAncoreShareReportUsage",
 						"action": "Get report usage",
 						"description": "Returns the number of report runs per month, of all runs by button and by interface, for the account or one app, report or Qlik user."
 					},
 					{
-						"name": "List automated report runs",
+						"name": "Get Many Automated Report Runs",
 						"value": "listAncoreShareAutomatedRuns",
 						"action": "List automated report runs",
 						"description": "Lists the report runs started through the ancoreShare interface (not by the button) with result and error, to find failed automated runs."
@@ -383,7 +383,7 @@ export class AncoreShare implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get Qlik connection",
+						"name": "Get Qlik Connection",
 						"value": "getQlikConnection",
 						"action": "Get Qlik connection",
 						"description": "Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user."
@@ -405,7 +405,7 @@ export class AncoreShare implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Send Qlik Cloud request",
+						"name": "Send Qlik Cloud Request",
 						"value": "sendQlikCloudRequest",
 						"action": "Send Qlik Cloud request",
 						"description": "Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own."

@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.15.0';
+const CLIENT = 'n8n/1.15.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"changeAppOwner": {
@@ -825,85 +825,85 @@ export class AncoreMateApps implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Change app owner",
+						"name": "Change Owner",
 						"value": "changeAppOwner",
 						"action": "Change app owner",
 						"description": "Transfers an app to another user."
 					},
 					{
-						"name": "Copy app",
+						"name": "Copy",
 						"value": "copyApp",
 						"action": "Copy app",
 						"description": "Creates a copy of an app, optionally with a new name or in another space."
 					},
 					{
-						"name": "Create app",
+						"name": "Create",
 						"value": "createApp",
 						"action": "Create app",
 						"description": "Creates an empty app."
 					},
 					{
-						"name": "Delete app",
+						"name": "Delete",
 						"value": "deleteApp",
 						"action": "Delete app",
 						"description": "Deletes an app."
 					},
 					{
-						"name": "Export app",
+						"name": "Export",
 						"value": "exportApp",
 						"action": "Export app",
 						"description": "Exports an app as QVF file, optionally without data. Files up to 30 MB can be sent and files up to 50 MB returned."
 					},
 					{
-						"name": "Get app",
+						"name": "Get",
 						"value": "getApp",
 						"action": "Get app",
 						"description": "Returns the attributes of an app such as name, owner, space and last reload time."
 					},
 					{
-						"name": "Get app data lineage",
+						"name": "Get Data Lineage",
 						"value": "getAppDataLineage",
 						"action": "Get app data lineage",
 						"description": "Returns the data sources the app loads from."
 					},
 					{
-						"name": "Get app data model",
+						"name": "Get Data Model",
 						"value": "getAppDataMetadata",
 						"action": "Get app data model",
 						"description": "Returns the tables and fields of the app data model with their sizes."
 					},
 					{
-						"name": "Import app",
+						"name": "Import",
 						"value": "importApp",
 						"action": "Import app",
 						"description": "Imports a QVF file as a new app into a space or the personal space. Files up to 30 MB can be sent and files up to 50 MB returned."
 					},
 					{
-						"name": "List apps",
+						"name": "Get Many",
 						"value": "getApps",
 						"action": "List apps",
 						"description": "Lists the Qlik Sense apps of the tenant that the connected Qlik Cloud user has access to, sorted by name."
 					},
 					{
-						"name": "Move app to space",
+						"name": "Move to Space",
 						"value": "moveAppToSpace",
 						"action": "Move app to space",
 						"description": "Moves an app to another shared space."
 					},
 					{
-						"name": "Publish app",
+						"name": "Publish",
 						"value": "publishApp",
 						"action": "Publish app",
 						"description": "Publishes an app to a managed space for the first time."
 					},
 					{
-						"name": "Republish app",
+						"name": "Republish",
 						"value": "republishApp",
 						"action": "Republish app",
 						"description": "Replaces a published app in a managed space with the current version of the source app."
 					},
 					{
-						"name": "Update app",
+						"name": "Update",
 						"value": "updateApp",
 						"action": "Update app",
 						"description": "Changes the name or description of an app."
@@ -925,19 +925,19 @@ export class AncoreMateApps implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Evaluate app performance",
+						"name": "Evaluate App Performance",
 						"value": "evaluateAppPerformance",
 						"action": "Evaluate app performance",
 						"description": "Starts a performance evaluation of an app. Get the result with Get app evaluation."
 					},
 					{
-						"name": "Get app evaluation",
+						"name": "Get",
 						"value": "getAppEvaluation",
 						"action": "Get app evaluation",
 						"description": "Returns the result of a performance evaluation."
 					},
 					{
-						"name": "List app evaluations",
+						"name": "Get Many",
 						"value": "listAppEvaluations",
 						"action": "List app evaluations",
 						"description": "Lists the performance evaluations of an app."
@@ -959,25 +959,25 @@ export class AncoreMateApps implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Delete app media file",
+						"name": "Delete File",
 						"value": "deleteAppMediaFile",
 						"action": "Delete app media file",
 						"description": "Deletes a file from the media library of an app."
 					},
 					{
-						"name": "Get app media file",
+						"name": "Get File",
 						"value": "getAppMediaFile",
 						"action": "Get app media file",
 						"description": "Downloads a file from the media library of an app, or the thumbnail of the app. Files up to 30 MB can be sent and files up to 50 MB returned."
 					},
 					{
-						"name": "List app media files",
+						"name": "Get Many Files",
 						"value": "listAppMediaFiles",
 						"action": "List app media files",
 						"description": "Lists the images and other files in the media library of an app."
 					},
 					{
-						"name": "Upload app media file",
+						"name": "Upload File",
 						"value": "uploadAppMediaFile",
 						"action": "Upload app media file",
 						"description": "Uploads an image or other file into the media library of an app; an existing file is replaced. Files up to 30 MB can be sent and files up to 50 MB returned."
@@ -999,31 +999,31 @@ export class AncoreMateApps implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get load script",
+						"name": "Get",
 						"value": "getLoadScript",
 						"action": "Get load script",
 						"description": "Returns the current load script of an app."
 					},
 					{
-						"name": "Get load script version",
+						"name": "Get Version",
 						"value": "getLoadScriptVersion",
 						"action": "Get load script version",
 						"description": "Returns a saved version of the load script of an app."
 					},
 					{
-						"name": "List load script versions",
+						"name": "Get Many Versions",
 						"value": "listLoadScriptVersions",
 						"action": "List load script versions",
 						"description": "Lists the saved versions of the load script of an app."
 					},
 					{
-						"name": "Set load script",
+						"name": "Set",
 						"value": "setLoadScript",
 						"action": "Set load script",
 						"description": "Replaces the load script of an app and keeps the previous script as a version."
 					},
 					{
-						"name": "Validate load script",
+						"name": "Validate",
 						"value": "validateLoadScript",
 						"action": "Validate load script",
 						"description": "Checks a load script for basic errors such as unknown statements, without saving or running it; errors in the details of a statement are found only when the app is reloaded."
@@ -1045,31 +1045,31 @@ export class AncoreMateApps implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Create script",
+						"name": "Create",
 						"value": "createScript",
 						"action": "Create script",
 						"description": "Creates an empty script in a space or the personal space."
 					},
 					{
-						"name": "Delete script",
+						"name": "Delete",
 						"value": "deleteScript",
 						"action": "Delete script",
 						"description": "Deletes a script."
 					},
 					{
-						"name": "Get script",
+						"name": "Get",
 						"value": "getScript",
 						"action": "Get script",
 						"description": "Returns the current content of a script."
 					},
 					{
-						"name": "List scripts",
+						"name": "Get Many",
 						"value": "listScripts",
 						"action": "List scripts",
 						"description": "Lists the scripts, optionally filtered by name or space."
 					},
 					{
-						"name": "Update script",
+						"name": "Update",
 						"value": "updateScript",
 						"action": "Update script",
 						"description": "Replaces the content of a script and keeps the previous content as a version."
@@ -1091,7 +1091,7 @@ export class AncoreMateApps implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get Qlik connection",
+						"name": "Get Qlik Connection",
 						"value": "getQlikConnection",
 						"action": "Get Qlik connection",
 						"description": "Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user."
@@ -1113,7 +1113,7 @@ export class AncoreMateApps implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Send Qlik Cloud request",
+						"name": "Send Qlik Cloud Request",
 						"value": "sendQlikCloudRequest",
 						"action": "Send Qlik Cloud request",
 						"description": "Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own."
@@ -1461,7 +1461,7 @@ export class AncoreMateApps implements INodeType {
 						]
 					}
 				},
-				"description": "Exports only the structure and the load script, without data."
+				"description": "Whether to export only the structure and the load script, without data."
 			},
 			{
 				"displayName": "File name",
@@ -1601,7 +1601,7 @@ export class AncoreMateApps implements INodeType {
 						"name": "all",
 						"type": "boolean",
 						"default": false,
-						"description": "Get the full data of the evaluation."
+						"description": "Whether to return the full data of the evaluation."
 					}
 				]
 			},
@@ -1658,7 +1658,7 @@ export class AncoreMateApps implements INodeType {
 						]
 					}
 				},
-				"description": "Returns the thumbnail of the app instead of a media file."
+				"description": "Whether to return the thumbnail of the app instead of a media file."
 			},
 			{
 				"displayName": "Put Output File in Field",
@@ -2178,7 +2178,7 @@ export class AncoreMateApps implements INodeType {
 						"name": "moveApp",
 						"type": "boolean",
 						"default": false,
-						"description": "The original is moved instead of copied."
+						"description": "Whether to move the original app instead of copying it."
 					},
 					{
 						"displayName": "Space ID",
@@ -2267,7 +2267,7 @@ export class AncoreMateApps implements INodeType {
 						"name": "checkOriginAppId",
 						"type": "boolean",
 						"default": false,
-						"description": "Validate that source app is same as originally published."
+						"description": "Whether to check that the source app is the app that was originally published."
 					}
 				]
 			},

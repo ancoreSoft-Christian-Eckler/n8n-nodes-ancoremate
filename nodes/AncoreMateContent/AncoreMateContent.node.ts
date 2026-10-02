@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.15.0';
+const CLIENT = 'n8n/1.15.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -853,31 +853,31 @@ export class AncoreMateContent implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get change store",
+						"name": "Get",
 						"value": "getChangeStore",
 						"action": "Get change store",
 						"description": "Returns a change store."
 					},
 					{
-						"name": "List change store columns",
+						"name": "Get Many Columns",
 						"value": "listChangeStoreColumns",
 						"action": "List change store columns",
 						"description": "Lists the editable columns of a change store."
 					},
 					{
-						"name": "List change store table",
+						"name": "Get Many Table",
 						"value": "listChangeStoreTable",
 						"action": "List change store table",
 						"description": "Lists the edits of a change store as table rows."
 					},
 					{
-						"name": "List change stores",
+						"name": "Get Many",
 						"value": "listChangeStores",
 						"action": "List change stores",
 						"description": "Lists the change stores that keep the edits of write tables."
 					},
 					{
-						"name": "List current changes",
+						"name": "Get Many Current Changes",
 						"value": "listCurrentChanges",
 						"action": "List current changes",
 						"description": "Lists the current edits in a change store."
@@ -899,37 +899,37 @@ export class AncoreMateContent implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Copy data connection",
+						"name": "Copy",
 						"value": "copyDataConnection",
 						"action": "Copy data connection",
 						"description": "Creates a copy of a data connection, optionally in another space."
 					},
 					{
-						"name": "Create data connection",
+						"name": "Create",
 						"value": "createDataConnection",
 						"action": "Create data connection",
 						"description": "Creates a data connection in a space."
 					},
 					{
-						"name": "Delete data connection",
+						"name": "Delete",
 						"value": "deleteDataConnection",
 						"action": "Delete data connection",
 						"description": "Deletes a data connection."
 					},
 					{
-						"name": "Get data connection",
+						"name": "Get",
 						"value": "getDataConnection",
 						"action": "Get data connection",
 						"description": "Returns a data connection."
 					},
 					{
-						"name": "List data connections",
+						"name": "Get Many",
 						"value": "listDataConnections",
 						"action": "List data connections",
 						"description": "Lists the data connections the connected user can use."
 					},
 					{
-						"name": "Update data connection",
+						"name": "Update",
 						"value": "updateDataConnection",
 						"action": "Update data connection",
 						"description": "Replaces the settings of a data connection."
@@ -951,49 +951,49 @@ export class AncoreMateContent implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Copy data file",
+						"name": "Copy",
 						"value": "copyDataFile",
 						"action": "Copy data file",
 						"description": "Copies a data file under a new name, optionally into another space."
 					},
 					{
-						"name": "Create data folder",
+						"name": "Create Data Folder",
 						"value": "createDataFolder",
 						"action": "Create data folder",
 						"description": "Creates a folder for data files in a space or the personal space."
 					},
 					{
-						"name": "Delete data file",
+						"name": "Delete Data File",
 						"value": "deleteDataFile",
 						"action": "Delete data file",
 						"description": "Deletes a data file."
 					},
 					{
-						"name": "Delete data files",
+						"name": "Delete Data Files",
 						"value": "deleteDataFiles",
 						"action": "Delete data files",
 						"description": "Deletes several data files at once."
 					},
 					{
-						"name": "Get data file",
+						"name": "Get",
 						"value": "getDataFile",
 						"action": "Get data file",
 						"description": "Returns the details of a data file."
 					},
 					{
-						"name": "List data file connections",
+						"name": "Get Many Connections",
 						"value": "listDataFileConnections",
 						"action": "List data file connections",
 						"description": "Lists the data file connections, one per space with data files."
 					},
 					{
-						"name": "List data files",
+						"name": "Get Many",
 						"value": "listDataFiles",
 						"action": "List data files",
 						"description": "Lists the data files in a space or in the personal space."
 					},
 					{
-						"name": "Upload data file",
+						"name": "Upload",
 						"value": "uploadDataFile",
 						"action": "Upload data file",
 						"description": "Uploads a data file, for example CSV or Excel, into a space or the personal space; with a data file ID the existing file is replaced. Files up to 30 MB can be sent and files up to 50 MB returned."
@@ -1015,13 +1015,13 @@ export class AncoreMateContent implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get item",
+						"name": "Get",
 						"value": "getItem",
 						"action": "Get item",
 						"description": "Returns an item of the tenant."
 					},
 					{
-						"name": "List items",
+						"name": "Get Many",
 						"value": "listItems",
 						"action": "List items",
 						"description": "Lists the items of the tenant such as apps, data files, notes and automations. Filter by type, name or space."
@@ -1043,7 +1043,7 @@ export class AncoreMateContent implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Get Qlik connection",
+						"name": "Get Qlik Connection",
 						"value": "getQlikConnection",
 						"action": "Get Qlik connection",
 						"description": "Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user."
@@ -1065,7 +1065,7 @@ export class AncoreMateContent implements INodeType {
 				},
 				"options": [
 					{
-						"name": "Send Qlik Cloud request",
+						"name": "Send Qlik Cloud Request",
 						"value": "sendQlikCloudRequest",
 						"action": "Send Qlik Cloud request",
 						"description": "Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own."
@@ -1455,14 +1455,14 @@ export class AncoreMateContent implements INodeType {
 						"name": "qSeparateCredentials",
 						"type": "boolean",
 						"default": false,
-						"description": "Indicates whether or not to create a credential-less connection."
+						"description": "Whether to create a connection without stored credentials."
 					},
 					{
 						"displayName": "Auth URL Only",
 						"name": "authUrlOnly",
 						"type": "boolean",
 						"default": false,
-						"description": "When set to true, only authentication URL will be returned (i.e."
+						"description": "Whether to return only the authentication URL."
 					},
 					{
 						"displayName": "Connection Properties",
@@ -1964,7 +1964,7 @@ export class AncoreMateContent implements INodeType {
 						"name": "personal",
 						"type": "boolean",
 						"default": false,
-						"description": "Filtering on personal connections, ignored if spaceId is defined in same request."
+						"description": "Whether to list only personal connections. Ignored when a space is set."
 					},
 					{
 						"displayName": "Owner",
@@ -2037,7 +2037,7 @@ export class AncoreMateContent implements INodeType {
 						"name": "personal",
 						"type": "boolean",
 						"default": false,
-						"description": "If true, only return the connections that access data in a personal space."
+						"description": "Whether to return only the connections that access data in a personal space."
 					},
 					{
 						"displayName": "Sort",
@@ -2128,7 +2128,7 @@ export class AncoreMateContent implements INodeType {
 						"name": "includeFolders",
 						"type": "boolean",
 						"default": false,
-						"description": "If set to true, include folders in the returned list."
+						"description": "Whether to include folders in the list."
 					},
 					{
 						"displayName": "Name",
@@ -2656,7 +2656,7 @@ export class AncoreMateContent implements INodeType {
 						"name": "qSeparateCredentials",
 						"type": "boolean",
 						"default": false,
-						"description": "Indicates whether or not this is a credential-less connection."
+						"description": "Whether the connection has no stored credentials."
 					}
 				]
 			},
