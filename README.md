@@ -249,7 +249,7 @@ Work with files and data in Qlik Cloud®: find items, upload, copy, move and del
 - **Data file: List data files** – Lists the data files in a space or in the personal space.
 - **Item: List items** – Lists the items of the tenant such as apps, data files, notes and automations. Filter by type, name or space.
 - **Data connection: Update data connection** – Replaces the settings of a data connection.
-- **Data file: Upload data file** – Uploads a data file, for example CSV or Excel, into a space or the personal space; with a data file ID the existing file is replaced. Files up to 30 MB can be sent and files up to 50 MB returned.
+- **Data file: Upload data file** – Uploads a data file, for example CSV or Excel, into a space or the personal space. A file with the same name is replaced unless If the file exists is set to Fail. Files up to 30 MB can be sent and files up to 50 MB returned.
 - **App: List app choices** – Lists the apps the connected Qlik Cloud user can open, for selecting an app in other actions.
 - **Space: List space choices** – Lists the spaces the connected Qlik Cloud user can see, for selecting a space in other actions.
 - **Trigger: Delete trigger subscription** – Turns a trigger off and deletes its webhook in Qlik Cloud.

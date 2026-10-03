@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.18.0';
+const CLIENT = 'n8n/1.19.0';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -577,6 +577,10 @@ const OPERATIONS: Record<string, OperationSpec> = {
 				"option": true
 			},
 			{
+				"name": "baseNameWildcard",
+				"option": true
+			},
+			{
 				"name": "dataFileConnectionId",
 				"option": true
 			},
@@ -770,6 +774,10 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "folderId",
 				"option": true
+			},
+			{
+				"name": "ifExists",
+				"option": false
 			},
 			{
 				"name": "dataFileId",
@@ -998,7 +1006,7 @@ export class AncoreMateContent implements INodeType {
 						"name": "Upload",
 						"value": "uploadDataFile",
 						"action": "Upload data file",
-						"description": "Uploads a data file, for example CSV or Excel, into a space or the personal space; with a data file ID the existing file is replaced. Files up to 30 MB can be sent and files up to 50 MB returned."
+						"description": "Uploads a data file, for example CSV or Excel, into a space or the personal space. A file with the same name is replaced unless If the file exists is set to Fail. Files up to 30 MB can be sent and files up to 50 MB returned."
 					}
 				],
 				"default": "copyDataFile"
@@ -2316,6 +2324,13 @@ export class AncoreMateContent implements INodeType {
 						"description": "Only return files scoped to the specified app."
 					},
 					{
+						"displayName": "Base Name Wildcard",
+						"name": "baseNameWildcard",
+						"type": "string",
+						"default": "",
+						"description": "Returns only files whose name matches this pattern; * stands for any text and ? for one character, for example sales* or *.csv."
+					},
+					{
 						"displayName": "Data File Connection ID",
 						"name": "dataFileConnectionId",
 						"type": "string",
@@ -2341,7 +2356,7 @@ export class AncoreMateContent implements INodeType {
 						"name": "name",
 						"type": "string",
 						"default": "",
-						"description": "Filter the list of files returned to the given file name."
+						"description": "Returns only the data file with exactly this name, for example sales.csv. To find files by a part of the name, use Base name wildcard."
 					},
 					{
 						"displayName": "Owner ID",
@@ -2933,6 +2948,33 @@ export class AncoreMateContent implements INodeType {
 				"description": "The data file connection of the space. Leave empty for the personal space."
 			},
 			{
+				"displayName": "If the file exists",
+				"name": "ifExists",
+				"type": "options",
+				"options": [
+					{
+						"name": "replace",
+						"value": "replace"
+					},
+					{
+						"name": "fail",
+						"value": "fail"
+					}
+				],
+				"default": "replace",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"data file"
+						],
+						"operation": [
+							"uploadDataFile"
+						]
+					}
+				},
+				"description": "What happens when a data file with this name already exists in the space or folder: replace (the default) replaces its content, fail stops with an error."
+			},
+			{
 				"displayName": "Input Binary Field",
 				"name": "binaryPropertyName",
 				"type": "string",
@@ -2983,7 +3025,7 @@ export class AncoreMateContent implements INodeType {
 							"loadOptionsMethod": "loadListDataFilesId"
 						},
 						"default": "",
-						"description": "The data file to replace. Leave empty to upload a new file."
+						"description": "The data file to replace, also under another name. Leave empty to upload by name."
 					}
 				]
 			}
