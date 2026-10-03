@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.19.2';
+const CLIENT = 'n8n/1.20.0';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -533,13 +533,13 @@ export class AncoreMateReloads implements INodeType {
 						"name": "Reload App",
 						"value": "reloadApp",
 						"action": "Reload app",
-						"description": "Starts a reload of an app and returns the reload with its ID and status."
+						"description": "Starts a reload of an app and returns the reload with its ID and status. If a reload of the app is already waiting in the queue, that reload is returned, since it will load the latest data anyway."
 					},
 					{
 						"name": "Reload App and Wait",
 						"value": "reloadAppAndWait",
 						"action": "Reload app and wait",
-						"description": "Reloads an app and waits until the reload is finished; the result tells whether it succeeded."
+						"description": "Reloads an app and waits until the reload is finished; the result tells whether it succeeded. If a reload of the app is already waiting in the queue, the action waits for that reload instead of starting a second one."
 					},
 					{
 						"name": "Wait for Reloads",
