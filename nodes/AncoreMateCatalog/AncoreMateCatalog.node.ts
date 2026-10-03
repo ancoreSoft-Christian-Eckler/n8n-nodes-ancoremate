@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.17.3';
+const CLIENT = 'n8n/1.18.0';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"changeGlossaryTermStatus": {
@@ -56,7 +56,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "appId",
@@ -145,7 +146,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "type",
@@ -219,7 +221,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "type",
@@ -318,7 +321,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "spaceId",
@@ -369,7 +373,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "stewards",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "description",
@@ -400,7 +405,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "linksTo",
@@ -410,7 +416,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "stewards",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "relatesTo",
@@ -420,7 +427,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "categories",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "description",
@@ -656,7 +664,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "terms",
@@ -850,7 +859,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "appId",
@@ -941,7 +951,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "type",
@@ -1017,7 +1028,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "type",
@@ -1118,7 +1130,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "spaceId",
@@ -1170,7 +1183,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "stewards",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "description",
@@ -1202,7 +1216,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "linksTo",
@@ -1212,7 +1227,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "stewards",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "relatesTo",
@@ -1222,7 +1238,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "categories",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "description",
@@ -1832,9 +1849,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "The tags."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "The tags. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "App ID",
@@ -1978,9 +1999,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "The tags."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "The tags. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Owner ID",
@@ -2132,9 +2157,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "The tags."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "The tags. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Type",
@@ -2260,9 +2289,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "List of tags for glossary."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "List of tags for glossary. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Space ID",
@@ -2349,9 +2382,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Stewards",
 						"name": "stewards",
-						"type": "json",
-						"default": "[]",
-						"description": "This list contains the UIDs of the stewards of the category."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Steward"
+						},
+						"default": [],
+						"description": "This list contains the UIDs of the stewards of the category. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Description",
@@ -2421,9 +2458,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "The tags."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "The tags. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Links To",
@@ -2435,9 +2476,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Stewards",
 						"name": "stewards",
-						"type": "json",
-						"default": "[]",
-						"description": "This list contain the UIDs for the term's stewards."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Steward"
+						},
+						"default": [],
+						"description": "This list contain the UIDs for the term's stewards. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Relates To",
@@ -2449,9 +2494,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Categories",
 						"name": "categories",
-						"type": "json",
-						"default": "[]",
-						"description": "Category Ids that the term belongs to."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Category"
+						},
+						"default": [],
+						"description": "Category Ids that the term belongs to. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Description",
@@ -2815,9 +2864,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "The tags."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "The tags. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Terms",
@@ -3613,9 +3666,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "The tags."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "The tags. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "App ID",
@@ -3780,9 +3837,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "The tags."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "The tags. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Owner ID",
@@ -3952,9 +4013,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "The tags."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "The tags. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Type",
@@ -4101,9 +4166,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "List of tags for glossary."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "List of tags for glossary. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Space ID",
@@ -4208,9 +4277,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Stewards",
 						"name": "stewards",
-						"type": "json",
-						"default": "[]",
-						"description": "This list contains the UIDs of the stewards of the category."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Steward"
+						},
+						"default": [],
+						"description": "This list contains the UIDs of the stewards of the category. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Description",
@@ -4298,9 +4371,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "The tags."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "The tags. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Links To",
@@ -4312,9 +4389,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Stewards",
 						"name": "stewards",
-						"type": "json",
-						"default": "[]",
-						"description": "This list contain the UIDs for the term's stewards."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Steward"
+						},
+						"default": [],
+						"description": "This list contain the UIDs for the term's stewards. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Relates To",
@@ -4326,9 +4407,13 @@ export class AncoreMateCatalog implements INodeType {
 					{
 						"displayName": "Categories",
 						"name": "categories",
-						"type": "json",
-						"default": "[]",
-						"description": "Category Ids that the term belongs to."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Category"
+						},
+						"default": [],
+						"description": "Category Ids that the term belongs to. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Description",

@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.17.3';
+const CLIENT = 'n8n/1.18.0';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"addSpaceMember": {
@@ -32,7 +32,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "roles",
 				"required": true,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "assigneeId",
@@ -68,7 +69,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "roles",
 				"required": true,
-				"json": true
+				"json": false,
+				"list": true
 			}
 		],
 		"fileInput": false,
@@ -128,7 +130,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "roles",
 				"required": true,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "assigneeId",
@@ -517,7 +520,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "roles",
 				"required": true,
-				"json": true
+				"json": false,
+				"list": true
 			}
 		],
 		"fileInput": false,
@@ -548,7 +552,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "roles",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			}
 		],
 		"fileInput": false,
@@ -570,7 +575,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "roles",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			}
 		],
 		"fileInput": false,
@@ -592,7 +598,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "roles",
 				"required": true,
-				"json": true
+				"json": false,
+				"list": true
 			}
 		],
 		"fileInput": false,
@@ -1054,10 +1061,14 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 			{
 				"displayName": "Roles",
 				"name": "roles",
-				"type": "json",
-				"default": "[]",
+				"type": "string",
+				"typeOptions": {
+					"multipleValues": true,
+					"multipleValueButtonText": "Add Role"
+				},
+				"default": [],
 				"required": true,
-				"description": "The roles assigned to the assigneeId.",
+				"description": "The roles assigned to the assigneeId. One value per field; an expression may also return a list.",
 				"displayOptions": {
 					"show": {
 						"resource": [
@@ -1129,10 +1140,14 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 			{
 				"displayName": "Roles",
 				"name": "roles",
-				"type": "json",
-				"default": "[]",
+				"type": "string",
+				"typeOptions": {
+					"multipleValues": true,
+					"multipleValueButtonText": "Add Role"
+				},
+				"default": [],
 				"required": true,
-				"description": "The roles to add, for example consumer or producer.",
+				"description": "The roles to add, for example consumer or producer. One value per field; an expression may also return a list.",
 				"displayOptions": {
 					"show": {
 						"resource": [
@@ -1332,10 +1347,14 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 			{
 				"displayName": "Roles",
 				"name": "roles",
-				"type": "json",
-				"default": "[]",
+				"type": "string",
+				"typeOptions": {
+					"multipleValues": true,
+					"multipleValueButtonText": "Add Role"
+				},
+				"default": [],
 				"required": true,
-				"description": "The roles assigned to the assigneeId.",
+				"description": "The roles assigned to the assigneeId. One value per field; an expression may also return a list.",
 				"displayOptions": {
 					"show": {
 						"resource": [
@@ -2396,10 +2415,14 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 			{
 				"displayName": "Roles",
 				"name": "roles",
-				"type": "json",
-				"default": "[]",
+				"type": "string",
+				"typeOptions": {
+					"multipleValues": true,
+					"multipleValueButtonText": "Add Role"
+				},
+				"default": [],
 				"required": true,
-				"description": "The roles to remove, for example producer.",
+				"description": "The roles to remove, for example producer. One value per field; an expression may also return a list.",
 				"displayOptions": {
 					"show": {
 						"resource": [
@@ -2523,9 +2546,13 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 					{
 						"displayName": "Roles",
 						"name": "roles",
-						"type": "json",
-						"default": "[]",
-						"description": "The roles, for example consumer, contributor, producer or facilitator. Without roles the member is removed."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Role"
+						},
+						"default": [],
+						"description": "The roles, for example consumer, contributor, producer or facilitator. Without roles the member is removed. One value per field; an expression may also return a list."
 					}
 				]
 			},
@@ -2588,9 +2615,13 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 					{
 						"displayName": "Roles",
 						"name": "roles",
-						"type": "json",
-						"default": "[]",
-						"description": "The roles assigned to the assigneeId."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Role"
+						},
+						"default": [],
+						"description": "The roles assigned to the assigneeId. One value per field; an expression may also return a list."
 					}
 				]
 			},
@@ -2636,10 +2667,14 @@ export class AncoreMateSpacesAndAccess implements INodeType {
 			{
 				"displayName": "Roles",
 				"name": "roles",
-				"type": "json",
-				"default": "[]",
+				"type": "string",
+				"typeOptions": {
+					"multipleValues": true,
+					"multipleValueButtonText": "Add Role"
+				},
+				"default": [],
 				"required": true,
-				"description": "The roles the share grants, for example consumer.",
+				"description": "The roles the share grants, for example consumer. One value per field; an expression may also return a list.",
 				"displayOptions": {
 					"show": {
 						"resource": [

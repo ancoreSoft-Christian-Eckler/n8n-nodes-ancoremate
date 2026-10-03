@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.17.3';
+const CLIENT = 'n8n/1.18.0';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -144,7 +144,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "owner",
@@ -309,7 +310,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "ids",
 				"required": true,
-				"json": true
+				"json": false,
+				"list": true
 			}
 		],
 		"fileInput": false,
@@ -1341,9 +1343,13 @@ export class AncoreMateContent implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "List of tags attached to the connection (allow max 31 tags)."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "List of tags attached to the connection (allow max 31 tags). One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Owner",
@@ -1582,10 +1588,14 @@ export class AncoreMateContent implements INodeType {
 			{
 				"displayName": "Data file IDs",
 				"name": "ids",
-				"type": "json",
-				"default": "[]",
+				"type": "string",
+				"typeOptions": {
+					"multipleValues": true,
+					"multipleValueButtonText": "Add Data file ID"
+				},
+				"default": [],
 				"required": true,
-				"description": "The IDs of the data files to delete.",
+				"description": "The IDs of the data files to delete. One value per field; an expression may also return a list.",
 				"displayOptions": {
 					"show": {
 						"resource": [

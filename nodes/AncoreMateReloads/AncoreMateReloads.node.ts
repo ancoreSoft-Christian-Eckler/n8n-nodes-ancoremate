@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.17.3';
+const CLIENT = 'n8n/1.18.0';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -429,7 +429,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "reloadIds",
 				"required": true,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "failOnError",
@@ -1565,10 +1566,14 @@ export class AncoreMateReloads implements INodeType {
 			{
 				"displayName": "Reload IDs",
 				"name": "reloadIds",
-				"type": "json",
-				"default": "[]",
+				"type": "string",
+				"typeOptions": {
+					"multipleValues": true,
+					"multipleValueButtonText": "Add Reload ID"
+				},
+				"default": [],
 				"required": true,
-				"description": "The IDs of the reloads, at most 50.",
+				"description": "The IDs of the reloads, at most 50. One value per field; an expression may also return a list.",
 				"displayOptions": {
 					"show": {
 						"resource": [

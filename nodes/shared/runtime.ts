@@ -19,7 +19,7 @@ export interface OperationSpec {
 	list: boolean;
 	pathParameters: string[];
 	query: Array<{ name: string; option: boolean }>;
-	body: Array<{ name: string; required: boolean; json: boolean }>;
+	body: Array<{ name: string; required: boolean; json: boolean; list?: boolean; entries?: boolean }>;
 	fileInput: boolean;
 	fileOutput: boolean;
 	filesOutput: boolean;
@@ -120,6 +120,50 @@ function isEmpty(value: unknown): boolean {
 }
 
 /**
+ * The values of a list field: one input field per value, or an expression or JSON text that returns a list.
+ */
+function toList(value: unknown): unknown[] {
+	const values = Array.isArray(value) ? value : [value];
+	return values
+		.flatMap((entry) => {
+			if (Array.isArray(entry)) {
+				return entry as unknown[];
+			}
+			if (typeof entry === 'string' && entry.trim().startsWith('[')) {
+				try {
+					const parsed: unknown = JSON.parse(entry);
+					if (Array.isArray(parsed)) {
+						return parsed as unknown[];
+					}
+				} catch {
+					// A value that only looks like a list.
+				}
+			}
+			return [entry];
+		})
+		.filter((entry) => !isEmpty(entry));
+}
+
+/**
+ * The entries of a list with input fields (for example selections), without empty fields.
+ */
+function entriesOf(collection: unknown): IDataObject[] {
+	const entries = ((collection as IDataObject | undefined)?.entries as IDataObject[] | undefined) ?? [];
+	return entries
+		.map((entry) => {
+			const cleaned: IDataObject = {};
+			for (const [key, value] of Object.entries(entry)) {
+				const cleanedValue = Array.isArray(value) ? toList(value) : value;
+				if (!isEmpty(cleanedValue) && !(Array.isArray(cleanedValue) && cleanedValue.length === 0)) {
+					cleaned[key] = cleanedValue as IDataObject;
+				}
+			}
+			return cleaned;
+		})
+		.filter((entry) => Object.keys(entry).length > 0);
+}
+
+/**
  * The message of an ancoreMate error response ({"error": {"code", "message"}}), which says what to correct; n8n
  * itself only shows a general text such as "Bad request - please check your parameters".
  */
@@ -193,6 +237,25 @@ export async function runOperations(
 				const additional = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
 				for (const field of spec.body) {
 					let value = field.required ? this.getNodeParameter(field.name, i) : additional[field.name];
+					if (field.list) {
+						const values = toList(value);
+						if (values.length > 0) {
+							fields[field.name] = values as IDataObject[];
+						}
+						continue;
+					}
+					if (field.entries) {
+						const input = field.required ? this.getNodeParameter(`${field.name}Ui`, i, {}) : additional[`${field.name}Ui`];
+						const fromInput = entriesOf(input);
+						if (!isEmpty(value) && value !== '[]') {
+							const parsed = typeof value === 'string' ? (JSON.parse(value) as unknown) : value;
+							fromInput.push(...((Array.isArray(parsed) ? parsed : [parsed]) as IDataObject[]));
+						}
+						if (fromInput.length > 0) {
+							fields[field.name] = fromInput;
+						}
+						continue;
+					}
 					if (isEmpty(value)) {
 						continue;
 					}

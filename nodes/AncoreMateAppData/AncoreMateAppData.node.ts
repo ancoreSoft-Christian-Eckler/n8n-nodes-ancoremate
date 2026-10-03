@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.17.3';
+const CLIENT = 'n8n/1.18.0';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"createBookmark": {
@@ -42,7 +42,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "selections",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "bookmarkId",
@@ -93,7 +94,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			}
 		],
 		"fileInput": false,
@@ -139,7 +141,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "tags",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			}
 		],
 		"fileInput": false,
@@ -192,7 +195,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "selections",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "bookmarkId",
@@ -330,7 +334,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "selections",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "bookmarkId",
@@ -372,7 +377,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "selections",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "bookmarkId",
@@ -404,7 +410,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "selections",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "bookmarkId",
@@ -441,7 +448,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "selections",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "bookmarkId",
@@ -520,7 +528,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "selections",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "bookmarkId",
@@ -568,7 +577,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "selections",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "bookmarkId",
@@ -594,12 +604,14 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "dimensions",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "measures",
 				"required": false,
-				"json": true
+				"json": false,
+				"list": true
 			},
 			{
 				"name": "limit",
@@ -609,7 +621,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "selections",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "bookmarkId",
@@ -682,7 +695,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "selections",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "bookmarkId",
@@ -743,7 +757,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "selections",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "bookmarkId",
@@ -1621,10 +1636,54 @@ export class AncoreMateAppData implements INodeType {
 					},
 					{
 						"displayName": "Selections",
+						"name": "selectionsUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Selection",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Selection",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Field",
+										"name": "field",
+										"type": "string",
+										"default": "",
+										"description": "The name of the field."
+									},
+									{
+										"displayName": "Values",
+										"name": "values",
+										"type": "string",
+										"typeOptions": {
+											"multipleValues": true,
+											"multipleValueButtonText": "Add Value"
+										},
+										"default": [],
+										"description": "The values to select. One value per field."
+									},
+									{
+										"displayName": "Search",
+										"name": "search",
+										"type": "string",
+										"default": "",
+										"description": "A search instead of values, for example A* or >1000."
+									}
+								]
+							}
+						],
+						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+					},
+					{
+						"displayName": "Selections (JSON)",
 						"name": "selections",
 						"type": "json",
 						"default": "[]",
-						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+						"description": "Selections as JSON list, for example from a previous node; added to the selections above."
 					},
 					{
 						"displayName": "Bookmark ID",
@@ -1733,9 +1792,13 @@ export class AncoreMateAppData implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "The tags."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "The tags. One value per field; an expression may also return a list."
 					}
 				]
 			},
@@ -1837,9 +1900,13 @@ export class AncoreMateAppData implements INodeType {
 					{
 						"displayName": "Tags",
 						"name": "tags",
-						"type": "json",
-						"default": "[]",
-						"description": "The tags."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Tag"
+						},
+						"default": [],
+						"description": "The tags. One value per field; an expression may also return a list."
 					}
 				]
 			},
@@ -2001,10 +2068,54 @@ export class AncoreMateAppData implements INodeType {
 					},
 					{
 						"displayName": "Selections",
+						"name": "selectionsUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Selection",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Selection",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Field",
+										"name": "field",
+										"type": "string",
+										"default": "",
+										"description": "The name of the field."
+									},
+									{
+										"displayName": "Values",
+										"name": "values",
+										"type": "string",
+										"typeOptions": {
+											"multipleValues": true,
+											"multipleValueButtonText": "Add Value"
+										},
+										"default": [],
+										"description": "The values to select. One value per field."
+									},
+									{
+										"displayName": "Search",
+										"name": "search",
+										"type": "string",
+										"default": "",
+										"description": "A search instead of values, for example A* or >1000."
+									}
+								]
+							}
+						],
+						"description": "Field selections applied to the report, for example Region with the value Europe."
+					},
+					{
+						"displayName": "Selections (JSON)",
 						"name": "selections",
 						"type": "json",
 						"default": "[]",
-						"description": "Field selections applied to the report, for example Region with the value Europe."
+						"description": "Selections as JSON list, for example from a previous node; added to the selections above."
 					},
 					{
 						"displayName": "Bookmark ID",
@@ -2358,10 +2469,54 @@ export class AncoreMateAppData implements INodeType {
 				"options": [
 					{
 						"displayName": "Selections",
+						"name": "selectionsUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Selection",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Selection",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Field",
+										"name": "field",
+										"type": "string",
+										"default": "",
+										"description": "The name of the field."
+									},
+									{
+										"displayName": "Values",
+										"name": "values",
+										"type": "string",
+										"typeOptions": {
+											"multipleValues": true,
+											"multipleValueButtonText": "Add Value"
+										},
+										"default": [],
+										"description": "The values to select. One value per field."
+									},
+									{
+										"displayName": "Search",
+										"name": "search",
+										"type": "string",
+										"default": "",
+										"description": "A search instead of values, for example A* or >1000."
+									}
+								]
+							}
+						],
+						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+					},
+					{
+						"displayName": "Selections (JSON)",
 						"name": "selections",
 						"type": "json",
 						"default": "[]",
-						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+						"description": "Selections as JSON list, for example from a previous node; added to the selections above."
 					},
 					{
 						"displayName": "Bookmark ID",
@@ -2482,10 +2637,54 @@ export class AncoreMateAppData implements INodeType {
 					},
 					{
 						"displayName": "Selections",
+						"name": "selectionsUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Selection",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Selection",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Field",
+										"name": "field",
+										"type": "string",
+										"default": "",
+										"description": "The name of the field."
+									},
+									{
+										"displayName": "Values",
+										"name": "values",
+										"type": "string",
+										"typeOptions": {
+											"multipleValues": true,
+											"multipleValueButtonText": "Add Value"
+										},
+										"default": [],
+										"description": "The values to select. One value per field."
+									},
+									{
+										"displayName": "Search",
+										"name": "search",
+										"type": "string",
+										"default": "",
+										"description": "A search instead of values, for example A* or >1000."
+									}
+								]
+							}
+						],
+						"description": "Field selections applied to the report, for example Region with the value Europe."
+					},
+					{
+						"displayName": "Selections (JSON)",
 						"name": "selections",
 						"type": "json",
 						"default": "[]",
-						"description": "Field selections applied to the report, for example Region with the value Europe."
+						"description": "Selections as JSON list, for example from a previous node; added to the selections above."
 					},
 					{
 						"displayName": "Bookmark ID",
@@ -2582,10 +2781,54 @@ export class AncoreMateAppData implements INodeType {
 				"options": [
 					{
 						"displayName": "Selections",
+						"name": "selectionsUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Selection",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Selection",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Field",
+										"name": "field",
+										"type": "string",
+										"default": "",
+										"description": "The name of the field."
+									},
+									{
+										"displayName": "Values",
+										"name": "values",
+										"type": "string",
+										"typeOptions": {
+											"multipleValues": true,
+											"multipleValueButtonText": "Add Value"
+										},
+										"default": [],
+										"description": "The values to select. One value per field."
+									},
+									{
+										"displayName": "Search",
+										"name": "search",
+										"type": "string",
+										"default": "",
+										"description": "A search instead of values, for example A* or >1000."
+									}
+								]
+							}
+						],
+						"description": "Field selections applied to the report, for example Region with the value Europe."
+					},
+					{
+						"displayName": "Selections (JSON)",
 						"name": "selections",
 						"type": "json",
 						"default": "[]",
-						"description": "Field selections applied to the report, for example Region with the value Europe."
+						"description": "Selections as JSON list, for example from a previous node; added to the selections above."
 					},
 					{
 						"displayName": "Bookmark ID",
@@ -2699,10 +2942,54 @@ export class AncoreMateAppData implements INodeType {
 					},
 					{
 						"displayName": "Selections",
+						"name": "selectionsUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Selection",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Selection",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Field",
+										"name": "field",
+										"type": "string",
+										"default": "",
+										"description": "The name of the field."
+									},
+									{
+										"displayName": "Values",
+										"name": "values",
+										"type": "string",
+										"typeOptions": {
+											"multipleValues": true,
+											"multipleValueButtonText": "Add Value"
+										},
+										"default": [],
+										"description": "The values to select. One value per field."
+									},
+									{
+										"displayName": "Search",
+										"name": "search",
+										"type": "string",
+										"default": "",
+										"description": "A search instead of values, for example A* or >1000."
+									}
+								]
+							}
+						],
+						"description": "Field selections applied to the report, for example Region with the value Europe."
+					},
+					{
+						"displayName": "Selections (JSON)",
 						"name": "selections",
 						"type": "json",
 						"default": "[]",
-						"description": "Field selections applied to the report, for example Region with the value Europe."
+						"description": "Selections as JSON list, for example from a previous node; added to the selections above."
 					},
 					{
 						"displayName": "Bookmark ID",
@@ -2914,10 +3201,54 @@ export class AncoreMateAppData implements INodeType {
 				"options": [
 					{
 						"displayName": "Selections",
+						"name": "selectionsUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Selection",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Selection",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Field",
+										"name": "field",
+										"type": "string",
+										"default": "",
+										"description": "The name of the field."
+									},
+									{
+										"displayName": "Values",
+										"name": "values",
+										"type": "string",
+										"typeOptions": {
+											"multipleValues": true,
+											"multipleValueButtonText": "Add Value"
+										},
+										"default": [],
+										"description": "The values to select. One value per field."
+									},
+									{
+										"displayName": "Search",
+										"name": "search",
+										"type": "string",
+										"default": "",
+										"description": "A search instead of values, for example A* or >1000."
+									}
+								]
+							}
+						],
+						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+					},
+					{
+						"displayName": "Selections (JSON)",
 						"name": "selections",
 						"type": "json",
 						"default": "[]",
-						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+						"description": "Selections as JSON list, for example from a previous node; added to the selections above."
 					},
 					{
 						"displayName": "Bookmark ID",
@@ -3063,10 +3394,54 @@ export class AncoreMateAppData implements INodeType {
 					},
 					{
 						"displayName": "Selections",
+						"name": "selectionsUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Selection",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Selection",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Field",
+										"name": "field",
+										"type": "string",
+										"default": "",
+										"description": "The name of the field."
+									},
+									{
+										"displayName": "Values",
+										"name": "values",
+										"type": "string",
+										"typeOptions": {
+											"multipleValues": true,
+											"multipleValueButtonText": "Add Value"
+										},
+										"default": [],
+										"description": "The values to select. One value per field."
+									},
+									{
+										"displayName": "Search",
+										"name": "search",
+										"type": "string",
+										"default": "",
+										"description": "A search instead of values, for example A* or >1000."
+									}
+								]
+							}
+						],
+						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+					},
+					{
+						"displayName": "Selections (JSON)",
 						"name": "selections",
 						"type": "json",
 						"default": "[]",
-						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+						"description": "Selections as JSON list, for example from a previous node; added to the selections above."
 					},
 					{
 						"displayName": "Bookmark ID",
@@ -3146,16 +3521,24 @@ export class AncoreMateAppData implements INodeType {
 					{
 						"displayName": "Dimensions",
 						"name": "dimensions",
-						"type": "json",
-						"default": "[]",
-						"description": "Fields or expressions starting with = for the rows, for example Region."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Dimension"
+						},
+						"default": [],
+						"description": "Fields or expressions starting with = for the rows, for example Region. One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Measures",
 						"name": "measures",
-						"type": "json",
-						"default": "[]",
-						"description": "Expressions for the values, for example Sum(Sales)."
+						"type": "string",
+						"typeOptions": {
+							"multipleValues": true,
+							"multipleValueButtonText": "Add Measure"
+						},
+						"default": [],
+						"description": "Expressions for the values, for example Sum(Sales). One value per field; an expression may also return a list."
 					},
 					{
 						"displayName": "Limit",
@@ -3166,10 +3549,54 @@ export class AncoreMateAppData implements INodeType {
 					},
 					{
 						"displayName": "Selections",
+						"name": "selectionsUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Selection",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Selection",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Field",
+										"name": "field",
+										"type": "string",
+										"default": "",
+										"description": "The name of the field."
+									},
+									{
+										"displayName": "Values",
+										"name": "values",
+										"type": "string",
+										"typeOptions": {
+											"multipleValues": true,
+											"multipleValueButtonText": "Add Value"
+										},
+										"default": [],
+										"description": "The values to select. One value per field."
+									},
+									{
+										"displayName": "Search",
+										"name": "search",
+										"type": "string",
+										"default": "",
+										"description": "A search instead of values, for example A* or >1000."
+									}
+								]
+							}
+						],
+						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+					},
+					{
+						"displayName": "Selections (JSON)",
 						"name": "selections",
 						"type": "json",
 						"default": "[]",
-						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+						"description": "Selections as JSON list, for example from a previous node; added to the selections above."
 					},
 					{
 						"displayName": "Bookmark ID",
@@ -3381,10 +3808,54 @@ export class AncoreMateAppData implements INodeType {
 					},
 					{
 						"displayName": "Selections",
+						"name": "selectionsUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Selection",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Selection",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Field",
+										"name": "field",
+										"type": "string",
+										"default": "",
+										"description": "The name of the field."
+									},
+									{
+										"displayName": "Values",
+										"name": "values",
+										"type": "string",
+										"typeOptions": {
+											"multipleValues": true,
+											"multipleValueButtonText": "Add Value"
+										},
+										"default": [],
+										"description": "The values to select. One value per field."
+									},
+									{
+										"displayName": "Search",
+										"name": "search",
+										"type": "string",
+										"default": "",
+										"description": "A search instead of values, for example A* or >1000."
+									}
+								]
+							}
+						],
+						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+					},
+					{
+						"displayName": "Selections (JSON)",
 						"name": "selections",
 						"type": "json",
 						"default": "[]",
-						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+						"description": "Selections as JSON list, for example from a previous node; added to the selections above."
 					},
 					{
 						"displayName": "Bookmark ID",
@@ -3551,10 +4022,54 @@ export class AncoreMateAppData implements INodeType {
 					},
 					{
 						"displayName": "Selections",
+						"name": "selectionsUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Selection",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Selection",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Field",
+										"name": "field",
+										"type": "string",
+										"default": "",
+										"description": "The name of the field."
+									},
+									{
+										"displayName": "Values",
+										"name": "values",
+										"type": "string",
+										"typeOptions": {
+											"multipleValues": true,
+											"multipleValueButtonText": "Add Value"
+										},
+										"default": [],
+										"description": "The values to select. One value per field."
+									},
+									{
+										"displayName": "Search",
+										"name": "search",
+										"type": "string",
+										"default": "",
+										"description": "A search instead of values, for example A* or >1000."
+									}
+								]
+							}
+						],
+						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+					},
+					{
+						"displayName": "Selections (JSON)",
 						"name": "selections",
 						"type": "json",
 						"default": "[]",
-						"description": "Field selections applied before reading, for example Region with the values Europe and Asia."
+						"description": "Selections as JSON list, for example from a previous node; added to the selections above."
 					},
 					{
 						"displayName": "Bookmark ID",
