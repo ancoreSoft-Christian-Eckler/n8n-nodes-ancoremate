@@ -346,6 +346,12 @@ export async function runOperations(
 			if (error instanceof NodeOperationError) {
 				throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
 			}
+			if (error instanceof NodeApiError) {
+				// n8n already wrapped the response ("Bad request - please check your parameters") and returns that error
+				// unchanged when it is wrapped again; a new error carries the ancoreMate message, which says what to correct.
+				const httpCode = error.httpCode ?? undefined;
+				throw new NodeApiError(this.getNode(), { message, httpCode, description: error.description } as JsonObject, { itemIndex: i, message, httpCode });
+			}
 			throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex: i, message, description: message });
 		}
 	}
