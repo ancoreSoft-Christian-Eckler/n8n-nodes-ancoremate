@@ -131,10 +131,16 @@ function ancoreMateMessage(error: unknown): string | undefined {
 	const causeResponse = cause?.response as IDataObject | undefined;
 	// httpRequestWithAuthentication throws a NodeApiError with the response body in context.data.
 	for (const candidate of [context?.data, response?.data, response?.body, causeResponse?.data, causeResponse?.body]) {
+		// File actions request binary data, so their error body arrives as bytes.
+		const text = typeof candidate === 'string'
+			? candidate
+			: Buffer.isBuffer(candidate) || candidate instanceof ArrayBuffer || ArrayBuffer.isView(candidate)
+				? Buffer.from(candidate as ArrayBuffer).toString('utf8')
+				: undefined;
 		let parsed: unknown = candidate;
-		if (typeof candidate === 'string') {
+		if (text !== undefined) {
 			try {
-				parsed = JSON.parse(candidate);
+				parsed = JSON.parse(text);
 			} catch {
 				continue;
 			}
@@ -274,7 +280,7 @@ export async function runOperations(
 			if (error instanceof NodeOperationError) {
 				throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
 			}
-			throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex: i, message });
+			throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex: i, message, description: message });
 		}
 	}
 
