@@ -125,10 +125,12 @@ function isEmpty(value: unknown): boolean {
  */
 function ancoreMateMessage(error: unknown): string | undefined {
 	const source = error as IDataObject;
+	const context = source?.context as IDataObject | undefined;
 	const response = source?.response as IDataObject | undefined;
 	const cause = source?.cause as IDataObject | undefined;
 	const causeResponse = cause?.response as IDataObject | undefined;
-	for (const candidate of [response?.data, response?.body, causeResponse?.data, causeResponse?.body, source?.description]) {
+	// httpRequestWithAuthentication throws a NodeApiError with the response body in context.data.
+	for (const candidate of [context?.data, response?.data, response?.body, causeResponse?.data, causeResponse?.body]) {
 		let parsed: unknown = candidate;
 		if (typeof candidate === 'string') {
 			try {
@@ -142,7 +144,8 @@ function ancoreMateMessage(error: unknown): string | undefined {
 			return message;
 		}
 	}
-	return undefined;
+	// The NodeApiError also keeps the message of the body as description.
+	return typeof source?.description === 'string' && source.description.length > 0 ? source.description : undefined;
 }
 
 export async function runOperations(
@@ -245,7 +248,9 @@ export async function runOperations(
 				if (result?.truncated === true || (total !== undefined && total > entries.length)) {
 					// The list was cut by the limit; say so, since one item per entry does not show it.
 					this.addExecutionHints?.({
-						message: `Only ${entries.length} of ${total ?? 'more'} entries were returned. Raise the limit, filter, or use Export chart data for large tables.`,
+						message: total !== undefined
+							? `Only ${entries.length} of ${total} rows were returned. Raise the limit, or use Export chart data for large tables.`
+							: `Only the first ${entries.length} entries were returned; there are more. Raise the limit or filter the list.`,
 						type: 'warning',
 						location: 'outputPane',
 					});
