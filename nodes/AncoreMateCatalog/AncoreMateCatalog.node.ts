@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.17.0';
+const CLIENT = 'n8n/1.17.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"changeGlossaryTermStatus": {
@@ -2925,6 +2925,34 @@ export class AncoreMateCatalog implements INodeType {
 				"description": "Comma-separated data store IDs or * to include all data stores."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"data asset"
+						],
+						"operation": [
+							"listDataAssets"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "Options",
 				"name": "options",
 				"type": "collection",
@@ -2954,6 +2982,34 @@ export class AncoreMateCatalog implements INodeType {
 						"description": "The maximum number of items to return, between 1 and 5000."
 					}
 				]
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"data store"
+						],
+						"operation": [
+							"listDataStores"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "Options",
@@ -3026,6 +3082,34 @@ export class AncoreMateCatalog implements INodeType {
 				"description": "Comma-separated data store IDs or * to include all data stores."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"dataset"
+						],
+						"operation": [
+							"listDatasets"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "Options",
 				"name": "options",
 				"type": "collection",
@@ -3055,6 +3139,34 @@ export class AncoreMateCatalog implements INodeType {
 						"description": "The maximum number of items to return, between 1 and 5000."
 					}
 				]
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"glossary"
+						],
+						"operation": [
+							"listGlossaries"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "Options",
@@ -3144,6 +3256,34 @@ export class AncoreMateCatalog implements INodeType {
 					}
 				},
 				"description": "The glossary id."
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"glossary category"
+						],
+						"operation": [
+							"listGlossaryCategories"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "Options",
@@ -3245,6 +3385,34 @@ export class AncoreMateCatalog implements INodeType {
 					}
 				},
 				"description": "The glossary id."
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"glossary term"
+						],
+						"operation": [
+							"listGlossaryTerms"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "Options",

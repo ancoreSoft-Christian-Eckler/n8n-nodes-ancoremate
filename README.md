@@ -25,6 +25,10 @@ Each node covers one area of Qlik Cloud. Choose the resource and the operation; 
 - Long-running operations such as reloads and exports wait for Qlik Cloud to finish and return the result.
 - **Send Qlik Cloud Request** calls any Qlik Cloud REST endpoint below `/api/v1/` with the same sign-in.
 - The trigger nodes register a webhook with ancoreMate when the workflow is activated and remove it when the workflow is deactivated.
+- Lists return one item per entry. Set **Output** to **One Item With All Entries** to get the whole list in one item together with `totalRows` and `truncated`; a warning in the output says when a list was cut by the limit.
+- Large tables: every row becomes an n8n item, which slows n8n down from about 10,000 rows. For large data use **Export Chart Data** (Excel file) instead of reading the rows.
+- A value that starts with `=` is an n8n expression. To send a Qlik expression that starts with `=`, for example the definition `=Sum(Amount)` of a variable, switch the field to **Expression** and enter `{{ "=Sum(Amount)" }}`.
+- Two input items that lead to the same reading request are sent to Qlik Cloud once; each item gets the result.
 
 ## Example workflows
 

@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.17.0';
+const CLIENT = 'n8n/1.17.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"createBookmark": {
@@ -2742,6 +2742,34 @@ export class AncoreMateAppData implements INodeType {
 				"description": "The app whose fields are listed."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"field"
+						],
+						"operation": [
+							"getAppFields"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "App",
 				"name": "appId",
 				"type": "options",
@@ -2982,6 +3010,34 @@ export class AncoreMateAppData implements INodeType {
 				"description": "The table or chart object."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"data"
+						],
+						"operation": [
+							"getTableData"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "Additional Fields",
 				"name": "additionalFields",
 				"type": "collection",
@@ -3041,6 +3097,34 @@ export class AncoreMateAppData implements INodeType {
 					}
 				},
 				"description": "The app."
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"data"
+						],
+						"operation": [
+							"getTableDataForFields"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "Additional Fields",
@@ -3160,6 +3244,34 @@ export class AncoreMateAppData implements INodeType {
 				"description": "The app."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"bookmark"
+						],
+						"operation": [
+							"listBookmarks"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "App",
 				"name": "appId",
 				"type": "options",
@@ -3200,6 +3312,34 @@ export class AncoreMateAppData implements INodeType {
 					}
 				},
 				"description": "The master dimension."
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"master dimension"
+						],
+						"operation": [
+							"listDimensionValues"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "Additional Fields",
@@ -3277,6 +3417,34 @@ export class AncoreMateAppData implements INodeType {
 				"description": "The app."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"master dimension"
+						],
+						"operation": [
+							"listDimensions"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "App",
 				"name": "appId",
 				"type": "options",
@@ -3304,6 +3472,34 @@ export class AncoreMateAppData implements INodeType {
 				"default": "",
 				"required": true,
 				"description": "The name of the field.",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"field"
+						],
+						"operation": [
+							"listFieldValues"
+						]
+					}
+				}
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
 				"displayOptions": {
 					"show": {
 						"resource": [
@@ -3391,6 +3587,34 @@ export class AncoreMateAppData implements INodeType {
 				"description": "The app."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"object"
+						],
+						"operation": [
+							"listMasterVisualizations"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "App",
 				"name": "appId",
 				"type": "options",
@@ -3410,6 +3634,62 @@ export class AncoreMateAppData implements INodeType {
 					}
 				},
 				"description": "The app."
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"master measure"
+						],
+						"operation": [
+							"listMeasures"
+						]
+					}
+				}
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"report"
+						],
+						"operation": [
+							"listReportTemplates"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "Options",
@@ -3499,6 +3779,34 @@ export class AncoreMateAppData implements INodeType {
 				"description": "The sheet."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"sheet"
+						],
+						"operation": [
+							"listSheetObjects"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "App",
 				"name": "appId",
 				"type": "options",
@@ -3518,6 +3826,34 @@ export class AncoreMateAppData implements INodeType {
 					}
 				},
 				"description": "The app."
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"sheet"
+						],
+						"operation": [
+							"listSheets"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "App",
@@ -3541,6 +3877,34 @@ export class AncoreMateAppData implements INodeType {
 				"description": "The app."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"object"
+						],
+						"operation": [
+							"listStories"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "App",
 				"name": "appId",
 				"type": "options",
@@ -3560,6 +3924,34 @@ export class AncoreMateAppData implements INodeType {
 					}
 				},
 				"description": "The app."
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"variable"
+						],
+						"operation": [
+							"listVariables"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "App",

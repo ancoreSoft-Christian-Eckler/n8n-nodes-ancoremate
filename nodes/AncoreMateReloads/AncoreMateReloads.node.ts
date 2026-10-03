@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.17.0';
+const CLIENT = 'n8n/1.17.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -1027,6 +1027,34 @@ export class AncoreMateReloads implements INodeType {
 				"description": "The reload task."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"reload task"
+						],
+						"operation": [
+							"listReloadTaskRuns"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "Options",
 				"name": "options",
 				"type": "collection",
@@ -1076,6 +1104,34 @@ export class AncoreMateReloads implements INodeType {
 				"description": "Only the reload tasks of this app."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"reload task"
+						],
+						"operation": [
+							"listReloadTasks"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "Options",
 				"name": "options",
 				"type": "collection",
@@ -1121,6 +1177,34 @@ export class AncoreMateReloads implements INodeType {
 					}
 				},
 				"description": "The UUID formatted string used to search for an app's reload history entries."
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"reload"
+						],
+						"operation": [
+							"listReloads"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "Options",
@@ -1485,6 +1569,34 @@ export class AncoreMateReloads implements INodeType {
 				"default": "[]",
 				"required": true,
 				"description": "The IDs of the reloads, at most 50.",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"reload"
+						],
+						"operation": [
+							"waitForReloads"
+						]
+					}
+				}
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
 				"displayOptions": {
 					"show": {
 						"resource": [

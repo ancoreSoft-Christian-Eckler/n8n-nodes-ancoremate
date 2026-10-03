@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.17.0';
+const CLIENT = 'n8n/1.17.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"downloadAncoreShareFile": {
@@ -468,6 +468,34 @@ export class AncoreShare implements INodeType {
 				}
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"report file"
+						],
+						"operation": [
+							"downloadAncoreShareFiles"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "Put Output File in Field",
 				"name": "dataPropertyName",
 				"type": "string",
@@ -561,6 +589,34 @@ export class AncoreShare implements INodeType {
 				"description": "Only runs of this Qlik user."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"usage"
+						],
+						"operation": [
+							"getAncoreShareReportUsage"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "Account ID",
 				"name": "accountId",
 				"type": "string",
@@ -636,6 +692,34 @@ export class AncoreShare implements INodeType {
 				"description": "Only the run with this task ID, for example from Run ancoreShare report."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"usage"
+						],
+						"operation": [
+							"listAncoreShareAutomatedRuns"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "Options",
 				"name": "options",
 				"type": "collection",
@@ -684,6 +768,34 @@ export class AncoreShare implements INodeType {
 					}
 				},
 				"description": "The app with the report button."
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"report"
+						],
+						"operation": [
+							"listAncoreShareReports"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "App",

@@ -10,7 +10,7 @@ import type {
 	INodePropertyOptions,
 	JsonObject,
 } from 'n8n-workflow';
-import { NodeApiError, sleep } from 'n8n-workflow';
+import { NodeApiError, NodeOperationError, sleep } from 'n8n-workflow';
 
 export interface OperationSpec {
 	method: IHttpRequestMethods;
@@ -119,6 +119,32 @@ function isEmpty(value: unknown): boolean {
 	return value === undefined || value === null || value === '';
 }
 
+/**
+ * The message of an ancoreMate error response ({"error": {"code", "message"}}), which says what to correct; n8n
+ * itself only shows a general text such as "Bad request - please check your parameters".
+ */
+function ancoreMateMessage(error: unknown): string | undefined {
+	const source = error as IDataObject;
+	const response = source?.response as IDataObject | undefined;
+	const cause = source?.cause as IDataObject | undefined;
+	const causeResponse = cause?.response as IDataObject | undefined;
+	for (const candidate of [response?.data, response?.body, causeResponse?.data, causeResponse?.body, source?.description]) {
+		let parsed: unknown = candidate;
+		if (typeof candidate === 'string') {
+			try {
+				parsed = JSON.parse(candidate);
+			} catch {
+				continue;
+			}
+		}
+		const message = ((parsed as IDataObject | undefined)?.error as IDataObject | undefined)?.message;
+		if (typeof message === 'string' && message.length > 0) {
+			return message;
+		}
+	}
+	return undefined;
+}
+
 export async function runOperations(
 	this: IExecuteFunctions,
 	operations: Record<string, OperationSpec>,
@@ -127,7 +153,8 @@ export async function runOperations(
 ): Promise<INodeExecutionData[][]> {
 	const items = this.getInputData();
 	const results: INodeExecutionData[] = [];
-	const sent = new Set<string>();
+	// A reading request with the same values for several items is sent once; every item gets the result.
+	const sent = new Map<string, FullResponse>();
 
 	for (let i = 0; i < items.length; i++) {
 		try {
@@ -161,23 +188,29 @@ export async function runOperations(
 						continue;
 					}
 					if (field.json && typeof value === 'string') {
-						value = JSON.parse(value);
+						try {
+							value = JSON.parse(value);
+						} catch (parseError) {
+							throw new NodeOperationError(
+								this.getNode(),
+								`The value of '${field.name}' is not valid JSON: ${(parseError as Error).message}`,
+								{ itemIndex: i },
+							);
+						}
 					}
 					fields[field.name] = value as IDataObject;
 				}
 				body = fields;
 			}
 
-			// A reading request with the same values for several items is sent once.
-			if (spec.read) {
-				const key = JSON.stringify([operation, path, qs, body]);
-				if (sent.has(key)) {
-					continue;
+			const key = spec.read ? JSON.stringify([operation, path, qs, body]) : undefined;
+			let response = key === undefined ? undefined : sent.get(key);
+			if (response === undefined) {
+				response = await send.call(this, baseUrl, client, spec, path, qs, body);
+				if (key !== undefined) {
+					sent.set(key, response);
 				}
-				sent.add(key);
 			}
-
-			const response = await send.call(this, baseUrl, client, spec, path, qs, body);
 			const outputField = spec.fileOutput || spec.filesOutput ? (this.getNodeParameter('dataPropertyName', i, 'data') as string) || 'data' : 'data';
 			if (spec.fileOutput) {
 				const data = Buffer.from(response.body as ArrayBuffer);
@@ -207,18 +240,36 @@ export async function runOperations(
 				continue;
 			}
 			if (spec.list) {
-				for (const entry of ((result?.value as IDataObject[] | undefined) ?? [])) {
-					results.push({ json: entry, pairedItem: { item: i } });
+				const entries = (result?.value as IDataObject[] | undefined) ?? [];
+				const total = typeof result?.totalRows === 'number' ? result.totalRows : undefined;
+				if (result?.truncated === true || (total !== undefined && total > entries.length)) {
+					// The list was cut by the limit; say so, since one item per entry does not show it.
+					this.addExecutionHints?.({
+						message: `Only ${entries.length} of ${total ?? 'more'} entries were returned. Raise the limit, filter, or use Export chart data for large tables.`,
+						type: 'warning',
+						location: 'outputPane',
+					});
+				}
+				if (this.getNodeParameter('outputMode', i, 'items') === 'whole') {
+					results.push({ json: result ?? {}, pairedItem: { item: i } });
+				} else {
+					for (const entry of entries) {
+						results.push({ json: entry, pairedItem: { item: i } });
+					}
 				}
 			} else {
 				results.push({ json: result ?? (spec.method === 'DELETE' ? { deleted: true } : { success: true }), pairedItem: { item: i } });
 			}
 		} catch (error) {
+			const message = error instanceof NodeOperationError ? error.message : (ancoreMateMessage(error) ?? (error as Error).message);
 			if (this.continueOnFail()) {
-				results.push({ json: { error: (error as Error).message }, pairedItem: { item: i } });
+				results.push({ json: { error: message }, pairedItem: { item: i } });
 				continue;
 			}
-			throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex: i });
+			if (error instanceof NodeOperationError) {
+				throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
+			}
+			throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex: i, message });
 		}
 	}
 

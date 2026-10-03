@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.17.0';
+const CLIENT = 'n8n/1.17.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"copyAutomation": {
@@ -1199,6 +1199,34 @@ export class AncoreMateAutomations implements INodeType {
 				"description": "The unique identifier for the run."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"automation connection"
+						],
+						"operation": [
+							"listAutomationConnections"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "Options",
 				"name": "options",
 				"type": "collection",
@@ -1322,6 +1350,34 @@ export class AncoreMateAutomations implements INodeType {
 				"description": "The unique identifier for the automation."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"automation run"
+						],
+						"operation": [
+							"listAutomationRuns"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "Options",
 				"name": "options",
 				"type": "collection",
@@ -1403,6 +1459,34 @@ export class AncoreMateAutomations implements INodeType {
 						"description": "The maximum number of items to return, between 1 and 5000."
 					}
 				]
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"automation"
+						],
+						"operation": [
+							"listAutomations"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "Options",

@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.17.0';
+const CLIENT = 'n8n/1.17.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"changeAppOwner": {
@@ -1703,6 +1703,34 @@ export class AncoreMateApps implements INodeType {
 				"description": "Returns only the apps of this space; personal for your personal space. Leave empty for all apps."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"app"
+						],
+						"operation": [
+							"getApps"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "Options",
 				"name": "options",
 				"type": "collection",
@@ -1896,6 +1924,34 @@ export class AncoreMateApps implements INodeType {
 				"description": "The app guid."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"app evaluation"
+						],
+						"operation": [
+							"listAppEvaluations"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "Options",
 				"name": "options",
 				"type": "collection",
@@ -1972,6 +2028,34 @@ export class AncoreMateApps implements INodeType {
 				"description": "A folder within the media library. Leave empty for all files."
 			},
 			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"app media"
+						],
+						"operation": [
+							"listAppMediaFiles"
+						]
+					}
+				}
+			},
+			{
 				"displayName": "App ID",
 				"name": "appId",
 				"type": "options",
@@ -1991,6 +2075,34 @@ export class AncoreMateApps implements INodeType {
 					}
 				},
 				"description": "Identifier of the app."
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"load script"
+						],
+						"operation": [
+							"listLoadScriptVersions"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "Options",
@@ -2022,6 +2134,34 @@ export class AncoreMateApps implements INodeType {
 						"description": "The maximum number of items to return, between 1 and 5000."
 					}
 				]
+			},
+			{
+				"displayName": "Output",
+				"name": "outputMode",
+				"type": "options",
+				"options": [
+					{
+						"name": "One Item per Entry",
+						"value": "items",
+						"description": "Each entry of the list is an item"
+					},
+					{
+						"name": "One Item With All Entries",
+						"value": "whole",
+						"description": "One item with the list in value and, where available, totalRows and truncated"
+					}
+				],
+				"default": "items",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"script"
+						],
+						"operation": [
+							"listScripts"
+						]
+					}
+				}
 			},
 			{
 				"displayName": "Options",
