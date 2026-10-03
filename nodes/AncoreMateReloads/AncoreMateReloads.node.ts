@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.15.1';
+const CLIENT = 'n8n/1.16.0';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -345,6 +345,11 @@ const OPERATIONS: Record<string, OperationSpec> = {
 				"name": "variables",
 				"required": false,
 				"json": true
+			},
+			{
+				"name": "failOnError",
+				"required": false,
+				"json": false
 			}
 		],
 		"fileInput": false,
@@ -425,6 +430,11 @@ const OPERATIONS: Record<string, OperationSpec> = {
 				"name": "reloadIds",
 				"required": true,
 				"json": true
+			},
+			{
+				"name": "failOnError",
+				"required": false,
+				"json": false
 			}
 		],
 		"fileInput": false,
@@ -1355,6 +1365,13 @@ export class AncoreMateReloads implements INodeType {
 						"type": "json",
 						"default": "{}",
 						"description": "Values for variables of the load script, for example {\"vYear\": \"2025\"}."
+					},
+					{
+						"displayName": "Fail when the reload fails",
+						"name": "failOnError",
+						"type": "boolean",
+						"default": false,
+						"description": "Whether the action fails when a reload fails, with the error of the load script. Turn off to continue with the result (succeeded = false) instead. Default: on."
 					}
 				]
 			},
@@ -1478,6 +1495,32 @@ export class AncoreMateReloads implements INodeType {
 						]
 					}
 				}
+			},
+			{
+				"displayName": "Additional Fields",
+				"name": "additionalFields",
+				"type": "collection",
+				"placeholder": "Add Field",
+				"default": {},
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"reload"
+						],
+						"operation": [
+							"waitForReloads"
+						]
+					}
+				},
+				"options": [
+					{
+						"displayName": "Fail when the reload fails",
+						"name": "failOnError",
+						"type": "boolean",
+						"default": false,
+						"description": "Whether the action fails when one of the reloads fails, with the error of the load script. Turn off to continue with the result (succeeded = false) instead. Default: on."
+					}
+				]
 			}
 		]
 	};
