@@ -88,7 +88,7 @@ Manage Qlik Sense® apps in Qlik Cloud®: create, copy, publish, move, export an
 - **Load script: List load script versions** – Lists the saved versions of the load script of an app.
 - **Script: List scripts** – Lists the scripts, optionally filtered by name or space.
 - **App: Move app to space** – Moves an app to another shared space.
-- **App: Publish app** – Publishes an app to a managed space for the first time.
+- **App: Publish app** – Publishes an app to a managed space for the first time. Publishing the same app again creates a second published app; use Republish app to update a published app.
 - **App: Republish app** – Replaces a published app in a managed space with the current version of the source app.
 - **Load script: Set load script** – Replaces the load script of an app and keeps the previous script as a version.
 - **App: Update app** – Changes the name or description of an app.
@@ -98,6 +98,7 @@ Manage Qlik Sense® apps in Qlik Cloud®: create, copy, publish, move, export an
 - **Connection: Get Qlik connection** – Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user.
 - **Request: Send Qlik Cloud request** – Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own.
 - **App: List app choices** – Lists the apps the connected Qlik Cloud user can open, for selecting an app in other actions.
+- **Space: List space choices** – Lists the spaces the connected Qlik Cloud user can see, for selecting a space in other actions.
 - **Trigger: Delete trigger subscription** – Turns a trigger off and deletes its webhook in Qlik Cloud.
 - **App: When an app is created** – Starts when an app is created.
 - **App: When the data model of an app changes** – Starts when the data model of an app is updated, for example by a reload with changed tables.
@@ -128,6 +129,7 @@ Reload Qlik Sense® apps in Qlik Cloud® and wait for the result, follow and can
 - **Reload task: Update reload task** – Changes the schedule of a reload task; values left empty stay as they are.
 - **Reload: Wait for reloads** – Waits until the given reloads, for example started in parallel, are finished.
 - **App: List app choices** – Lists the apps the connected Qlik Cloud user can open, for selecting an app in other actions.
+- **Space: List space choices** – Lists the spaces the connected Qlik Cloud user can see, for selecting a space in other actions.
 - **Trigger: Delete trigger subscription** – Turns a trigger off and deletes its webhook in Qlik Cloud.
 - **Reload: When an app reload finishes** – Starts when a reload of an app finishes, successfully or with an error.
 
@@ -180,6 +182,7 @@ Work with the content of Qlik Sense® apps in Qlik Cloud®: read field values, e
 - **Connection: Get Qlik connection** – Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user.
 - **Request: Send Qlik Cloud request** – Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own.
 - **App: List app choices** – Lists the apps the connected Qlik Cloud user can open, for selecting an app in other actions.
+- **Space: List space choices** – Lists the spaces the connected Qlik Cloud user can see, for selecting a space in other actions.
 - **Trigger: Delete trigger subscription** – Turns a trigger off and deletes its webhook in Qlik Cloud.
 
 ### ancoreMate Spaces and Access
@@ -213,6 +216,7 @@ Control access to Qlik Cloud®: read the tenant, create spaces, add members and 
 - **Connection: Get Qlik connection** – Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user.
 - **Request: Send Qlik Cloud request** – Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own.
 - **App: List app choices** – Lists the apps the connected Qlik Cloud user can open, for selecting an app in other actions.
+- **Space: List space choices** – Lists the spaces the connected Qlik Cloud user can see, for selecting a space in other actions.
 - **Trigger: Delete trigger subscription** – Turns a trigger off and deletes its webhook in Qlik Cloud.
 
 ### ancoreMate Content
@@ -243,6 +247,7 @@ Work with files and data in Qlik Cloud®: find items, upload, copy, move and del
 - **Data connection: Update data connection** – Replaces the settings of a data connection.
 - **Data file: Upload data file** – Uploads a data file, for example CSV or Excel, into a space or the personal space; with a data file ID the existing file is replaced. Files up to 30 MB can be sent and files up to 50 MB returned.
 - **App: List app choices** – Lists the apps the connected Qlik Cloud user can open, for selecting an app in other actions.
+- **Space: List space choices** – Lists the spaces the connected Qlik Cloud user can see, for selecting a space in other actions.
 - **Trigger: Delete trigger subscription** – Turns a trigger off and deletes its webhook in Qlik Cloud.
 
 ### ancoreMate Catalog
@@ -284,6 +289,7 @@ Maintain the data catalog of Qlik Cloud®: data stores, data assets and datasets
 - **Connection: Get Qlik connection** – Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user.
 - **Request: Send Qlik Cloud request** – Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own.
 - **App: List app choices** – Lists the apps the connected Qlik Cloud user can open, for selecting an app in other actions.
+- **Space: List space choices** – Lists the spaces the connected Qlik Cloud user can see, for selecting a space in other actions.
 - **Trigger: Delete trigger subscription** – Turns a trigger off and deletes its webhook in Qlik Cloud.
 
 ### ancoreMate Automations
@@ -314,6 +320,7 @@ Run and manage the automations of Qlik Cloud®: run, stop and retry automations,
 - **Connection: Get Qlik connection** – Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user.
 - **Request: Send Qlik Cloud request** – Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own.
 - **App: List app choices** – Lists the apps the connected Qlik Cloud user can open, for selecting an app in other actions.
+- **Space: List space choices** – Lists the spaces the connected Qlik Cloud user can see, for selecting a space in other actions.
 - **Trigger: Delete trigger subscription** – Turns a trigger off and deletes its webhook in Qlik Cloud.
 - **Automation: When an automation is created** – Starts when an automation is created.
 - **Automation: When an automation is deleted** – Starts when an automation is deleted.
@@ -336,6 +343,7 @@ Run ancoreShare reports, download the report files and read the report usage. Tr
 - **Connection: Get Qlik connection** – Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user.
 - **Request: Send Qlik Cloud request** – Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own.
 - **App: List app choices** – Lists the apps the connected Qlik Cloud user can open, for selecting an app in other actions.
+- **Space: List space choices** – Lists the spaces the connected Qlik Cloud user can see, for selecting a space in other actions.
 - **Trigger: Delete trigger subscription** – Turns a trigger off and deletes its webhook in Qlik Cloud.
 
 ## Requirements

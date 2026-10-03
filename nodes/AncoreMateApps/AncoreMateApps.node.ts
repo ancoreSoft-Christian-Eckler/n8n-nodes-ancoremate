@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.16.0';
+const CLIENT = 'n8n/1.17.0';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"changeAppOwner": {
@@ -312,6 +312,10 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "search",
 				"option": true
+			},
+			{
+				"name": "spaceId",
+				"option": false
 			},
 			{
 				"name": "limit",
@@ -894,7 +898,7 @@ export class AncoreMateApps implements INodeType {
 						"name": "Publish",
 						"value": "publishApp",
 						"action": "Publish app",
-						"description": "Publishes an app to a managed space for the first time."
+						"description": "Publishes an app to a managed space for the first time. Publishing the same app again creates a second published app; use Republish app to update a published app."
 					},
 					{
 						"name": "Republish",
@@ -1679,6 +1683,26 @@ export class AncoreMateApps implements INodeType {
 				"hint": "The name of the output binary field to put the file in"
 			},
 			{
+				"displayName": "Space",
+				"name": "spaceId",
+				"type": "options",
+				"typeOptions": {
+					"loadOptionsMethod": "loadListSpaceChoicesId"
+				},
+				"default": "",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"app"
+						],
+						"operation": [
+							"getApps"
+						]
+					}
+				},
+				"description": "Returns only the apps of this space; personal for your personal space. Leave empty for all apps."
+			},
+			{
 				"displayName": "Options",
 				"name": "options",
 				"type": "collection",
@@ -2169,9 +2193,19 @@ export class AncoreMateApps implements INodeType {
 					{
 						"displayName": "Data",
 						"name": "data",
-						"type": "string",
-						"default": "",
-						"description": "The data."
+						"type": "options",
+						"options": [
+							{
+								"name": "source",
+								"value": "source"
+							},
+							{
+								"name": "target",
+								"value": "target"
+							}
+						],
+						"default": "source",
+						"description": "Which data the published app gets: source (the data of the source app, the default) or target (the published app keeps its current data, for Republish app)."
 					},
 					{
 						"displayName": "Move App",
@@ -2244,9 +2278,19 @@ export class AncoreMateApps implements INodeType {
 					{
 						"displayName": "Data",
 						"name": "data",
-						"type": "string",
-						"default": "",
-						"description": "The data."
+						"type": "options",
+						"options": [
+							{
+								"name": "source",
+								"value": "source"
+							},
+							{
+								"name": "target",
+								"value": "target"
+							}
+						],
+						"default": "source",
+						"description": "Which data the published app gets: source (the data of the source app, the default) or target (the published app keeps its current data, for Republish app)."
 					},
 					{
 						"displayName": "Target ID",
@@ -2632,6 +2676,9 @@ export class AncoreMateApps implements INodeType {
 			},
 			async loadListScriptsResourceId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/scripts', {"limit":1000}, {}, 'value', 'resourceId', 'name');
+			},
+			async loadListSpaceChoicesId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/space-choices', {"limit":1000}, {}, 'value', 'id', 'name');
 			},
 		},
 	};
