@@ -235,6 +235,17 @@ export async function runOperations(
 			} else if (spec.body.length > 0) {
 				const fields: IDataObject = {};
 				const additional = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
+				const parseJson = (name: string, text: string): unknown => {
+					try {
+						return JSON.parse(text);
+					} catch (parseError) {
+						throw new NodeOperationError(
+							this.getNode(),
+							`The value of '${name}' is not valid JSON: ${(parseError as Error).message}`,
+							{ itemIndex: i },
+						);
+					}
+				};
 				for (const field of spec.body) {
 					let value = field.required ? this.getNodeParameter(field.name, i) : additional[field.name];
 					if (field.list) {
@@ -248,7 +259,7 @@ export async function runOperations(
 						const input = field.required ? this.getNodeParameter(`${field.name}Ui`, i, {}) : additional[`${field.name}Ui`];
 						const fromInput = entriesOf(input);
 						if (!isEmpty(value) && value !== '[]') {
-							const parsed = typeof value === 'string' ? (JSON.parse(value) as unknown) : value;
+							const parsed = typeof value === 'string' ? parseJson(field.name, value) : value;
 							fromInput.push(...((Array.isArray(parsed) ? parsed : [parsed]) as IDataObject[]));
 						}
 						if (fromInput.length > 0) {
@@ -260,15 +271,7 @@ export async function runOperations(
 						continue;
 					}
 					if (field.json && typeof value === 'string') {
-						try {
-							value = JSON.parse(value);
-						} catch (parseError) {
-							throw new NodeOperationError(
-								this.getNode(),
-								`The value of '${field.name}' is not valid JSON: ${(parseError as Error).message}`,
-								{ itemIndex: i },
-							);
-						}
+						value = parseJson(field.name, value) as IDataObject;
 					}
 					fields[field.name] = value as IDataObject;
 				}
