@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.20.0';
+const CLIENT = 'n8n/1.21.0';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -350,6 +350,11 @@ const OPERATIONS: Record<string, OperationSpec> = {
 				"name": "failOnError",
 				"required": false,
 				"json": false
+			},
+			{
+				"name": "ifReloading",
+				"required": false,
+				"json": false
 			}
 		],
 		"fileInput": false,
@@ -533,13 +538,13 @@ export class AncoreMateReloads implements INodeType {
 						"name": "Reload App",
 						"value": "reloadApp",
 						"action": "Reload app",
-						"description": "Starts a reload of an app and returns the reload with its ID and status. If a reload of the app is already waiting in the queue, that reload is returned, since it will load the latest data anyway."
+						"description": "Starts a reload of an app and returns the reload with its ID and status. If a full reload of the app is already waiting in the queue, that reload is returned, since it will load the latest data anyway. While another reload of the app is running, Qlik Cloud starts no new one; use Reload app and wait to wait for it."
 					},
 					{
 						"name": "Reload App and Wait",
 						"value": "reloadAppAndWait",
 						"action": "Reload app and wait",
-						"description": "Reloads an app and waits until the reload is finished; the result tells whether it succeeded. If a reload of the app is already waiting in the queue, the action waits for that reload instead of starting a second one."
+						"description": "Reloads an app and waits until the reload is finished; the result tells whether it succeeded. If the app is already reloading, If the app is already reloading decides what happens."
 					},
 					{
 						"name": "Wait for Reloads",
@@ -1457,6 +1462,27 @@ export class AncoreMateReloads implements INodeType {
 						"type": "boolean",
 						"default": false,
 						"description": "Whether the action fails when a reload fails, with the error of the load script. Turn off to continue with the result (succeeded = false) instead. Default: on."
+					},
+					{
+						"displayName": "If the app is already reloading",
+						"name": "ifReloading",
+						"type": "options",
+						"options": [
+							{
+								"name": "Wait, then start a new reload",
+								"value": "reload"
+							},
+							{
+								"name": "Wait and use that reload",
+								"value": "use"
+							},
+							{
+								"name": "Fail",
+								"value": "fail"
+							}
+						],
+						"default": "reload",
+						"description": "What happens when another reload of the app is running or waiting: wait for it and then start a new reload (the default, the result has the latest data), wait for it and return its result, or fail."
 					}
 				]
 			},
