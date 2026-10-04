@@ -340,11 +340,11 @@ Run ancoreShare reports, download the report files and read the report usage. Tr
 
 - **Report file: Download report file** – Downloads one file of a finished report from its link; links are valid for 12 hours.
 - **Report file: Download report files** – Downloads all files of a finished report at once, for example to attach them to one mail.
-- **Usage: Get report usage** – Returns the number of report runs per month, of all runs by button and by interface, for the account or one app, report or Qlik user.
-- **Usage: List automated report runs** – Lists the report runs started through the ancoreShare interface (not by the button) with result and error, to find failed automated runs.
+- **Usage: Get report usage** – Returns the number of report runs per month, of all runs by button and by External Execution, for the account or one app, report or Qlik user.
+- **Usage: List automated report runs** – Lists the report runs started through ancoreShare External Execution (not by the button) with result and error, to find failed automated runs.
 - **Report: List ancoreShare reports** – Lists the ancoreShare report buttons of an app with title, export type and tags.
 - **Report: Run ancoreShare report** – Starts an ancoreShare report; ancoreShare queues it and sends the files to the targets of the report button, for example the ancoreMate event.
-- **Report: When an ancoreShare report is finished** – Starts when a report button with ancoreMate event enabled has finished a report, run by a user or through the interface.
+- **Report: When an ancoreShare report is finished** – Starts when a report button with ancoreMate event enabled has finished a report in the tenant of the connection, run by a user or through ancoreShare External Execution. With Include the report files the files come along as Attachments, ready for a mail.
 - **Connection: Get Qlik connection** – Returns whether ancoreMate is connected to a Qlik Cloud tenant, and to which tenant and Qlik user.
 - **Request: Send Qlik Cloud request** – Calls any REST API of your Qlik Cloud tenant below /api/v1/ with the connected user's rights, for operations that have no action of their own.
 - **App: List app choices** – Lists the apps the connected Qlik Cloud user can open, for selecting an app in other actions.

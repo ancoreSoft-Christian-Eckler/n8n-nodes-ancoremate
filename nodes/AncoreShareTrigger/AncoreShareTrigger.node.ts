@@ -9,17 +9,17 @@ import type {
 	IWebhookResponseData,
 } from 'n8n-workflow';
 import { NodeConnectionTypes } from 'n8n-workflow';
-import { createSubscription, deleteSubscription, eventItems, loadOptions, type TriggerSpec } from '../shared/runtime';
+import { createSubscription, deleteSubscription, eventData, loadOptions, type TriggerSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.21.0';
+const CLIENT = 'n8n/1.22.0';
 
 const EVENTS: Record<string, TriggerSpec> = {
 	"whenAncoreShareReportFinished": {
 		"path": "/v1/triggers/ancoreshare-report-finished",
 		"query": [
 			"key",
-			"accountId",
+			"includeFiles",
 			"appId",
 			"reportId"
 		]
@@ -67,7 +67,7 @@ export class AncoreShareTrigger implements INodeType {
 					{
 						"name": "When an ancoreShare report is finished",
 						"value": "whenAncoreShareReportFinished",
-						"description": "Starts when a report button with ancoreMate event enabled has finished a report, run by a user or through the interface."
+						"description": "Starts when a report button with ancoreMate event enabled has finished a report in the tenant of the connection, run by a user or through ancoreShare External Execution. With Include the report files the files come along as Attachments, ready for a mail."
 					}
 				],
 				"default": "whenAncoreShareReportFinished"
@@ -88,11 +88,10 @@ export class AncoreShareTrigger implements INodeType {
 				"description": "The ancoreMate key shown in the ancoreMate settings of the report button."
 			},
 			{
-				"displayName": "Account ID",
-				"name": "accountId",
-				"type": "string",
-				"default": "",
-				"required": true,
+				"displayName": "Include the report files",
+				"name": "includeFiles",
+				"type": "boolean",
+				"default": true,
 				"displayOptions": {
 					"show": {
 						"event": [
@@ -100,7 +99,7 @@ export class AncoreShareTrigger implements INodeType {
 						]
 					}
 				},
-				"description": "The ancoreShare account ID (customer number)."
+				"description": "Whether the trigger passes on the finished files as Attachments, ready for a mail; files up to 50 MB together. Turn off to get only the links."
 			},
 			{
 				"displayName": "App",
@@ -110,7 +109,6 @@ export class AncoreShareTrigger implements INodeType {
 					"loadOptionsMethod": "loadListAppChoicesResourceId"
 				},
 				"default": "",
-				"required": true,
 				"displayOptions": {
 					"show": {
 						"event": [
@@ -118,7 +116,7 @@ export class AncoreShareTrigger implements INodeType {
 						]
 					}
 				},
-				"description": "The app with the report button."
+				"description": "Only reports of this app; useful when a copy of the app has a button with the same key."
 			},
 			{
 				"displayName": "Report",
@@ -128,7 +126,6 @@ export class AncoreShareTrigger implements INodeType {
 					"loadOptionsMethod": "loadListAncoreShareReportsId"
 				},
 				"default": "",
-				"required": true,
 				"displayOptions": {
 					"show": {
 						"event": [
@@ -136,7 +133,7 @@ export class AncoreShareTrigger implements INodeType {
 						]
 					}
 				},
-				"description": "The report button."
+				"description": "Only reports of this report button."
 			}
 		]
 	};
@@ -167,6 +164,6 @@ export class AncoreShareTrigger implements INodeType {
 	};
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {
-		return { workflowData: [this.helpers.returnJsonArray(eventItems(this.getBodyData()))] };
+		return { workflowData: [await eventData.call(this, this.getBodyData())] };
 	}
 }

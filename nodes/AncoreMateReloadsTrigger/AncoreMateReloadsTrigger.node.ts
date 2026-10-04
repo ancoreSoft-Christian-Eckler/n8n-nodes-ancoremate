@@ -9,10 +9,10 @@ import type {
 	IWebhookResponseData,
 } from 'n8n-workflow';
 import { NodeConnectionTypes } from 'n8n-workflow';
-import { createSubscription, deleteSubscription, eventItems, loadOptions, type TriggerSpec } from '../shared/runtime';
+import { createSubscription, deleteSubscription, eventData, loadOptions, type TriggerSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.21.0';
+const CLIENT = 'n8n/1.22.0';
 
 const EVENTS: Record<string, TriggerSpec> = {
 	"whenAppReloadFinished": {
@@ -156,6 +156,6 @@ export class AncoreMateReloadsTrigger implements INodeType {
 	};
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {
-		return { workflowData: [this.helpers.returnJsonArray(eventItems(this.getBodyData()))] };
+		return { workflowData: [await eventData.call(this, this.getBodyData())] };
 	}
 }

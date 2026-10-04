@@ -8,6 +8,7 @@ import type {
 	ILoadOptionsFunctions,
 	INodeExecutionData,
 	INodePropertyOptions,
+	IWebhookFunctions,
 	JsonObject,
 } from 'n8n-workflow';
 import { NodeApiError, NodeOperationError, sleep } from 'n8n-workflow';
@@ -367,10 +368,33 @@ export function eventItems(body: IDataObject): IDataObject[] {
 	const files = body.files;
 	if (Array.isArray(files) && files.length > 0) {
 		const event: IDataObject = { ...body };
+		const attachments = Array.isArray(event.attachments) ? (event.attachments as IDataObject[]) : [];
 		delete event.files;
-		return (files as IDataObject[]).map((file) => ({ ...event, file }));
+		delete event.attachments;
+		return (files as IDataObject[]).map((file, index) =>
+			attachments[index] === undefined ? { ...event, file } : { ...event, file, attachment: attachments[index] },
+		);
 	}
 	return [body];
+}
+
+/**
+ * The output of a trigger. With "Include the report files" each item carries its file as binary data in the field
+ * data, ready for nodes such as Gmail or Send Email.
+ */
+export async function eventData(this: IWebhookFunctions, body: IDataObject): Promise<INodeExecutionData[]> {
+	const result: INodeExecutionData[] = [];
+	for (const item of eventItems(body)) {
+		const attachment = item.attachment as IDataObject | undefined;
+		delete item.attachment;
+		if (attachment === undefined || typeof attachment.ContentBytes !== 'string') {
+			result.push({ json: item });
+			continue;
+		}
+		const data = Buffer.from(attachment.ContentBytes, 'base64');
+		result.push({ json: item, binary: { data: await this.helpers.prepareBinaryData(data, attachment.Name as string) } });
+	}
+	return result;
 }
 
 export interface TriggerSpec {

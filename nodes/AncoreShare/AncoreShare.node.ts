@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.21.0';
+const CLIENT = 'n8n/1.22.0';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"downloadAncoreShareFile": {
@@ -359,13 +359,13 @@ export class AncoreShare implements INodeType {
 						"name": "Get Report Usage",
 						"value": "getAncoreShareReportUsage",
 						"action": "Get report usage",
-						"description": "Returns the number of report runs per month, of all runs by button and by interface, for the account or one app, report or Qlik user."
+						"description": "Returns the number of report runs per month, of all runs by button and by External Execution, for the account or one app, report or Qlik user."
 					},
 					{
 						"name": "Get Many Automated Report Runs",
 						"value": "listAncoreShareAutomatedRuns",
 						"action": "List automated report runs",
-						"description": "Lists the report runs started through the ancoreShare interface (not by the button) with result and error, to find failed automated runs."
+						"description": "Lists the report runs started through ancoreShare External Execution (not by the button) with result and error, to find failed automated runs."
 					}
 				],
 				"default": "getAncoreShareReportUsage"
