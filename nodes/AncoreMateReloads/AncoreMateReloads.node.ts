@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.22.0';
+const CLIENT = 'n8n/1.23.1';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -308,7 +308,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "variables",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "resourceId",
@@ -344,7 +345,8 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			{
 				"name": "variables",
 				"required": false,
-				"json": true
+				"json": true,
+				"entries": true
 			},
 			{
 				"name": "failOnError",
@@ -1365,10 +1367,49 @@ export class AncoreMateReloads implements INodeType {
 					},
 					{
 						"displayName": "Variables",
+						"name": "variablesUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Reload app variable",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Reload app variable",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Variable",
+										"name": "name",
+										"type": "options",
+										"typeOptions": {
+											"loadOptionsMethod": "loadListReloadVariableChoicesName",
+											"loadOptionsDependsOn": [
+												"appId"
+											]
+										},
+										"default": "",
+										"description": "The variable of the app."
+									},
+									{
+										"displayName": "Value",
+										"name": "value",
+										"type": "string",
+										"default": "",
+										"description": "The value for this reload, as text."
+									}
+								]
+							}
+						],
+						"description": "Values for variables of the load script for this reload. Only variables the app has can be given, and the load script must not set them before it uses them."
+					},
+					{
+						"displayName": "Variables (JSON)",
 						"name": "variables",
 						"type": "json",
-						"default": "{}",
-						"description": "The variables to be used in the load script."
+						"default": "[]",
+						"description": "Variables as JSON list, for example from a previous node; added to the variables above."
 					},
 					{
 						"displayName": "Resource ID",
@@ -1451,10 +1492,49 @@ export class AncoreMateReloads implements INodeType {
 					},
 					{
 						"displayName": "Variables",
+						"name": "variablesUi",
+						"type": "fixedCollection",
+						"typeOptions": {
+							"multipleValues": true
+						},
+						"placeholder": "Add Reload variable",
+						"default": {},
+						"options": [
+							{
+								"displayName": "Reload variable",
+								"name": "entries",
+								"values": [
+									{
+										"displayName": "Variable",
+										"name": "name",
+										"type": "options",
+										"typeOptions": {
+											"loadOptionsMethod": "loadListReloadVariableChoicesName",
+											"loadOptionsDependsOn": [
+												"appId"
+											]
+										},
+										"default": "",
+										"description": "The variable of the app."
+									},
+									{
+										"displayName": "Value",
+										"name": "value",
+										"type": "string",
+										"default": "",
+										"description": "The value for this reload, as text."
+									}
+								]
+							}
+						],
+						"description": "Values for variables of the load script for this reload. Only variables the app has can be given, and the load script must not set them before it uses them."
+					},
+					{
+						"displayName": "Variables (JSON)",
 						"name": "variables",
 						"type": "json",
-						"default": "{}",
-						"description": "Values for variables of the load script, for example {\"vYear\": \"2025\"}."
+						"default": "[]",
+						"description": "Variables as JSON list, for example from a previous node; added to the variables above."
 					},
 					{
 						"displayName": "Fail when the reload fails",
@@ -1675,6 +1755,9 @@ export class AncoreMateReloads implements INodeType {
 			},
 			async loadListReloadTasksId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/reload-tasks', {"limit":1000}, {}, 'value', 'id', 'name');
+			},
+			async loadListReloadVariableChoicesName(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/apps/{appId}/reload-variables', {}, {"appId":"appId"}, 'value', 'name', 'title');
 			},
 		},
 	};
