@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.23.3';
+const CLIENT = 'n8n/1.23.4';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"copyAutomation": {
@@ -2089,6 +2089,9 @@ export class AncoreMateAutomations implements INodeType {
 			},
 			async loadListAutomationsId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/automations', {"limit":1000}, {}, 'value', 'id', 'name');
+			},
+			async loadListSpaceChoicesId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/space-choices', {"limit":1000}, {}, 'value', 'id', 'name');
 			},
 		},
 	};

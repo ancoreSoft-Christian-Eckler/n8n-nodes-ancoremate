@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.23.3';
+const CLIENT = 'n8n/1.23.4';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"downloadAncoreShareFile": {
@@ -561,7 +561,10 @@ export class AncoreShare implements INodeType {
 				"name": "reportId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListAncoreShareReportsId"
+					"loadOptionsMethod": "loadListAncoreShareReportsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"displayOptions": {
@@ -664,7 +667,10 @@ export class AncoreShare implements INodeType {
 				"name": "reportId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListAncoreShareReportsId"
+					"loadOptionsMethod": "loadListAncoreShareReportsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"displayOptions": {
@@ -828,7 +834,10 @@ export class AncoreShare implements INodeType {
 				"name": "reportId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListAncoreShareReportsId"
+					"loadOptionsMethod": "loadListAncoreShareReportsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,

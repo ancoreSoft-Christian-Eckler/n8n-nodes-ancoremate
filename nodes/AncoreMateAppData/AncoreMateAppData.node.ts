@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.23.3';
+const CLIENT = 'n8n/1.23.4';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"createBookmark": {
@@ -2159,7 +2159,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "bookmarkId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListBookmarksId"
+					"loadOptionsMethod": "loadListBookmarksId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -2201,7 +2204,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "dimensionId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListDimensionsId"
+					"loadOptionsMethod": "loadListDimensionsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -2243,7 +2249,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "measureId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListMeasuresId"
+					"loadOptionsMethod": "loadListMeasuresId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -2285,7 +2294,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "sheetId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListSheetsId"
+					"loadOptionsMethod": "loadListSheetsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -2327,7 +2339,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "variableName",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListVariablesName"
+					"loadOptionsMethod": "loadListVariablesName",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -2369,7 +2384,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "sheetId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListSheetsId"
+					"loadOptionsMethod": "loadListSheetsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -2553,7 +2571,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "objectId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListDataObjectsId"
+					"loadOptionsMethod": "loadListDataObjectsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -2728,7 +2749,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "objectId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListDataObjectsId"
+					"loadOptionsMethod": "loadListDataObjectsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -2872,7 +2896,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "sheetId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListSheetsId"
+					"loadOptionsMethod": "loadListSheetsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -3082,7 +3109,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "dimensionId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListDimensionsId"
+					"loadOptionsMethod": "loadListDimensionsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -3124,7 +3154,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "measureId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListMeasuresId"
+					"loadOptionsMethod": "loadListMeasuresId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -3166,7 +3199,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "measureId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListMeasuresId"
+					"loadOptionsMethod": "loadListMeasuresId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -3324,7 +3360,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "objectId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListDataObjectsId"
+					"loadOptionsMethod": "loadListDataObjectsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -3633,7 +3672,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "variableName",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListVariablesName"
+					"loadOptionsMethod": "loadListVariablesName",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -3724,7 +3766,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "dimensionId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListDimensionsId"
+					"loadOptionsMethod": "loadListDimensionsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -4277,7 +4322,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "sheetId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListSheetsId"
+					"loadOptionsMethod": "loadListSheetsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -4494,7 +4542,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "bookmarkId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListBookmarksId"
+					"loadOptionsMethod": "loadListBookmarksId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -4536,7 +4587,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "sheetId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListSheetsId"
+					"loadOptionsMethod": "loadListSheetsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -4661,7 +4715,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "bookmarkId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListBookmarksId"
+					"loadOptionsMethod": "loadListBookmarksId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -4703,7 +4760,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "sheetId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListSheetsId"
+					"loadOptionsMethod": "loadListSheetsId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,
@@ -4745,7 +4805,10 @@ export class AncoreMateAppData implements INodeType {
 				"name": "bookmarkId",
 				"type": "options",
 				"typeOptions": {
-					"loadOptionsMethod": "loadListBookmarksId"
+					"loadOptionsMethod": "loadListBookmarksId",
+					"loadOptionsDependsOn": [
+						"appId"
+					]
 				},
 				"default": "",
 				"required": true,

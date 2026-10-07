@@ -12,7 +12,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { createSubscription, deleteSubscription, eventData, loadOptions, type TriggerSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.23.3';
+const CLIENT = 'n8n/1.23.4';
 
 const EVENTS: Record<string, TriggerSpec> = {
 	"whenAutomationCreated": {
@@ -130,9 +130,12 @@ export class AncoreMateAutomationsTrigger implements INodeType {
 				"default": "whenAutomationCreated"
 			},
 			{
-				"displayName": "Space ID",
+				"displayName": "Space",
 				"name": "spaceId",
-				"type": "string",
+				"type": "options",
+				"typeOptions": {
+					"loadOptionsMethod": "loadListSpaceChoicesId"
+				},
 				"default": "",
 				"displayOptions": {
 					"show": {
@@ -161,9 +164,12 @@ export class AncoreMateAutomationsTrigger implements INodeType {
 				"description": "Only events of this automation. Leave empty for all automations."
 			},
 			{
-				"displayName": "Space ID",
+				"displayName": "Space",
 				"name": "spaceId",
-				"type": "string",
+				"type": "options",
+				"typeOptions": {
+					"loadOptionsMethod": "loadListSpaceChoicesId"
+				},
 				"default": "",
 				"displayOptions": {
 					"show": {
@@ -192,9 +198,12 @@ export class AncoreMateAutomationsTrigger implements INodeType {
 				"description": "Only events of this automation. Leave empty for all automations."
 			},
 			{
-				"displayName": "Space ID",
+				"displayName": "Space",
 				"name": "spaceId",
-				"type": "string",
+				"type": "options",
+				"typeOptions": {
+					"loadOptionsMethod": "loadListSpaceChoicesId"
+				},
 				"default": "",
 				"displayOptions": {
 					"show": {
@@ -223,9 +232,12 @@ export class AncoreMateAutomationsTrigger implements INodeType {
 				"description": "Only events of this automation. Leave empty for all automations."
 			},
 			{
-				"displayName": "Space ID",
+				"displayName": "Space",
 				"name": "spaceId",
-				"type": "string",
+				"type": "options",
+				"typeOptions": {
+					"loadOptionsMethod": "loadListSpaceChoicesId"
+				},
 				"default": "",
 				"displayOptions": {
 					"show": {
@@ -254,9 +266,12 @@ export class AncoreMateAutomationsTrigger implements INodeType {
 				"description": "Only events of this automation. Leave empty for all automations."
 			},
 			{
-				"displayName": "Space ID",
+				"displayName": "Space",
 				"name": "spaceId",
-				"type": "string",
+				"type": "options",
+				"typeOptions": {
+					"loadOptionsMethod": "loadListSpaceChoicesId"
+				},
 				"default": "",
 				"displayOptions": {
 					"show": {
@@ -285,9 +300,12 @@ export class AncoreMateAutomationsTrigger implements INodeType {
 				"description": "Only events of this automation. Leave empty for all automations."
 			},
 			{
-				"displayName": "Space ID",
+				"displayName": "Space",
 				"name": "spaceId",
-				"type": "string",
+				"type": "options",
+				"typeOptions": {
+					"loadOptionsMethod": "loadListSpaceChoicesId"
+				},
 				"default": "",
 				"displayOptions": {
 					"show": {
@@ -305,6 +323,9 @@ export class AncoreMateAutomationsTrigger implements INodeType {
 		loadOptions: {
 			async loadListAutomationsId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/automations', {"limit":1000}, {}, 'value', 'id', 'name');
+			},
+			async loadListSpaceChoicesId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/space-choices', {"limit":1000}, {}, 'value', 'id', 'name');
 			},
 		},
 	};

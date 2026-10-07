@@ -12,7 +12,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { createSubscription, deleteSubscription, eventData, loadOptions, type TriggerSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.23.3';
+const CLIENT = 'n8n/1.23.4';
 
 const EVENTS: Record<string, TriggerSpec> = {
 	"whenAppReloadFinished": {
@@ -89,9 +89,12 @@ export class AncoreMateReloadsTrigger implements INodeType {
 				"description": "Only events of this app. Leave empty for all apps."
 			},
 			{
-				"displayName": "Space ID",
+				"displayName": "Space",
 				"name": "spaceId",
-				"type": "string",
+				"type": "options",
+				"typeOptions": {
+					"loadOptionsMethod": "loadListSpaceChoicesId"
+				},
 				"default": "",
 				"displayOptions": {
 					"show": {
@@ -137,6 +140,9 @@ export class AncoreMateReloadsTrigger implements INodeType {
 		loadOptions: {
 			async loadListAppChoicesResourceId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/app-choices', {"limit":1000}, {}, 'value', 'resourceId', 'name');
+			},
+			async loadListSpaceChoicesId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/space-choices', {"limit":1000}, {}, 'value', 'id', 'name');
 			},
 		},
 	};

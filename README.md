@@ -130,7 +130,7 @@ Reload Qlik Sense® apps in Qlik Cloud® and wait for the result, follow and can
 - **Reload: List reload variable choices** – Lists the variables of an app for the reload variables; used for the dropdown.
 - **Reload: List reloads** – Lists the reloads of an app, newest first.
 - **Reload: Reload app** – Starts a reload of an app and returns the reload with its ID and status. If a full reload of the app is already waiting in the queue, that reload is returned, since it will load the latest data anyway. While another reload of the app is running, Qlik Cloud starts no new one; use Reload app and wait to wait for it.
-- **Reload: Reload app and wait** – Reloads an app and waits until the reload is finished; the result tells whether it succeeded. If the app is already reloading, If the app is already reloading decides what happens.
+- **Reload: Reload app and wait** – Reloads an app and waits until the reload is finished; the result tells whether it succeeded. When the app is already reloading, the option If the app is already reloading decides what happens.
 - **Reload task: Start reload task** – Runs an enabled reload task now, outside its schedule.
 - **Reload task: Update reload task** – Changes the schedule of a reload task; values left empty stay as they are.
 - **Reload: Wait for reloads** – Waits until the given reloads, for example started in parallel, are finished.

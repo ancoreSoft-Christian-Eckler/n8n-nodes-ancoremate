@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.23.3';
+const CLIENT = 'n8n/1.23.4';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -546,7 +546,7 @@ export class AncoreMateReloads implements INodeType {
 						"name": "Reload App and Wait",
 						"value": "reloadAppAndWait",
 						"action": "Reload app and wait",
-						"description": "Reloads an app and waits until the reload is finished; the result tells whether it succeeded. If the app is already reloading, If the app is already reloading decides what happens."
+						"description": "Reloads an app and waits until the reload is finished; the result tells whether it succeeded. When the app is already reloading, the option If the app is already reloading decides what happens."
 					},
 					{
 						"name": "Wait for Reloads",
@@ -1762,6 +1762,9 @@ export class AncoreMateReloads implements INodeType {
 			},
 			async loadListReloadVariableChoicesName(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/apps/{appId}/reload-variables', {}, {"appId":"appId"}, 'value', 'name', 'title');
+			},
+			async loadListSpaceChoicesId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/space-choices', {"limit":1000}, {}, 'value', 'id', 'name');
 			},
 		},
 	};
