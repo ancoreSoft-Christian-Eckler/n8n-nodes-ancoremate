@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.23.2';
+const CLIENT = 'n8n/1.23.3';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -327,7 +327,12 @@ const OPERATIONS: Record<string, OperationSpec> = {
 		"pathParameters": [
 			"storeId"
 		],
-		"query": [],
+		"query": [
+			{
+				"name": "spaceId",
+				"option": false
+			}
+		],
 		"body": [],
 		"fileInput": false,
 		"fileOutput": false,
@@ -389,6 +394,10 @@ const OPERATIONS: Record<string, OperationSpec> = {
 		],
 		"query": [
 			{
+				"name": "spaceId",
+				"option": false
+			},
+			{
 				"name": "filter",
 				"option": true
 			},
@@ -416,6 +425,10 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			"storeId"
 		],
 		"query": [
+			{
+				"name": "spaceId",
+				"option": false
+			},
 			{
 				"name": "filter",
 				"option": true
@@ -470,6 +483,10 @@ const OPERATIONS: Record<string, OperationSpec> = {
 			"storeId"
 		],
 		"query": [
+			{
+				"name": "spaceId",
+				"option": false
+			},
 			{
 				"name": "filter",
 				"option": true
@@ -1616,6 +1633,26 @@ export class AncoreMateContent implements INodeType {
 				}
 			},
 			{
+				"displayName": "Space",
+				"name": "spaceId",
+				"type": "options",
+				"typeOptions": {
+					"loadOptionsMethod": "loadListSpaceChoicesId"
+				},
+				"default": "",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"change store"
+						],
+						"operation": [
+							"getChangeStore"
+						]
+					}
+				},
+				"description": "The space of the change store. Only narrows the list of change stores; leave empty when you enter the store ID."
+			},
+			{
 				"displayName": "Store ID",
 				"name": "storeId",
 				"type": "options",
@@ -1698,6 +1735,26 @@ export class AncoreMateContent implements INodeType {
 					}
 				},
 				"description": "The item's unique identifier."
+			},
+			{
+				"displayName": "Space",
+				"name": "spaceId",
+				"type": "options",
+				"typeOptions": {
+					"loadOptionsMethod": "loadListSpaceChoicesId"
+				},
+				"default": "",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"change store"
+						],
+						"operation": [
+							"listChangeStoreColumns"
+						]
+					}
+				},
+				"description": "The space of the change store. Only narrows the list of change stores; leave empty when you enter the store ID."
 			},
 			{
 				"displayName": "Store ID",
@@ -1792,6 +1849,26 @@ export class AncoreMateContent implements INodeType {
 						"description": "The maximum number of items to return, between 1 and 5000."
 					}
 				]
+			},
+			{
+				"displayName": "Space",
+				"name": "spaceId",
+				"type": "options",
+				"typeOptions": {
+					"loadOptionsMethod": "loadListSpaceChoicesId"
+				},
+				"default": "",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"change store"
+						],
+						"operation": [
+							"listChangeStoreTable"
+						]
+					}
+				},
+				"description": "The space of the change store. Only narrows the list of change stores; leave empty when you enter the store ID."
 			},
 			{
 				"displayName": "Store ID",
@@ -1970,6 +2047,26 @@ export class AncoreMateContent implements INodeType {
 						"description": "The maximum number of items to return, between 1 and 5000."
 					}
 				]
+			},
+			{
+				"displayName": "Space",
+				"name": "spaceId",
+				"type": "options",
+				"typeOptions": {
+					"loadOptionsMethod": "loadListSpaceChoicesId"
+				},
+				"default": "",
+				"displayOptions": {
+					"show": {
+						"resource": [
+							"change store"
+						],
+						"operation": [
+							"listCurrentChanges"
+						]
+					}
+				},
+				"description": "The space of the change store. Only narrows the list of change stores; leave empty when you enter the store ID."
 			},
 			{
 				"displayName": "Store ID",
@@ -3035,7 +3132,7 @@ export class AncoreMateContent implements INodeType {
 	methods = {
 		loadOptions: {
 			async loadListChangeStoresStoreId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
-				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/change-stores', {"limit":1000}, {}, 'value', 'storeId', 'storeName');
+				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/change-stores', {"limit":1000}, {"spaceId":"spaceId"}, 'value', 'storeId', 'storeName');
 			},
 			async loadListDataConnectionsId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/data-connections', {"limit":1000}, {}, 'value', 'id', 'qName');
@@ -3048,6 +3145,9 @@ export class AncoreMateContent implements INodeType {
 			},
 			async loadListItemsId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/items', {"limit":1000}, {}, 'value', 'id', 'name');
+			},
+			async loadListSpaceChoicesId(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				return loadOptions.call(this, BASE_URL, CLIENT, '/v1/space-choices', {"limit":1000}, {}, 'value', 'id', 'name');
 			},
 		},
 	};

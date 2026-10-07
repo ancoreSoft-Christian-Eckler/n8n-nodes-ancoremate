@@ -12,7 +12,7 @@ In n8n, open **Settings > Community nodes**, select **Install** and enter `n8n-n
 
 1. Create a credential of type **ancoreMate OAuth2 API** and select **Connect my account**.
 2. Sign in with your ancoreCloud account. The sign-in window shows the address of your n8n; continue only if it is yours.
-3. The first time, enter your Qlik Cloud tenant, for example `company.eu.qlikcloud.com`, sign in at Qlik Cloud and approve the access for ancoreMate. Later sign-ins offer to continue with the connected tenant.
+3. The first time, enter your Qlik Cloud tenant, for example `company.eu.qlikcloud.com`, sign in at Qlik Cloud and approve the access for ancoreMate. Later sign-ins list the Qlik Cloud connections of your ancoreCloud account: continue with one of them, or add another tenant or Qlik user. Each credential works with the Qlik Cloud connection chosen in its sign-in; the others stay as they are. To work with several tenants or Qlik users, create one credential per tenant or user.
 
 No client ID, client secret or API key has to be entered, neither in n8n nor in Qlik Cloud.
 
@@ -126,7 +126,7 @@ Reload Qlik Sense® apps in Qlik Cloud® and wait for the result, follow and can
 - **Reload task: Get reload task** – Returns a reload schedule with its next run.
 - **Reload log: List reload logs** – Lists the stored reload logs of an app.
 - **Reload task: List reload task runs** – Lists the runs of a reload task, newest first, with status and short log.
-- **Reload task: List reload tasks** – Lists the reload schedules, optionally of one app, with their next run.
+- **Reload task: List reload tasks** – Lists the reload schedules, optionally of one app, with their next run. Schedules made in the hub or with tools that use Qlik's older reload tasks API appear only after Qlik Cloud has moved them to its Scheduling Tasks API.
 - **Reload: List reload variable choices** – Lists the variables of an app for the reload variables; used for the dropdown.
 - **Reload: List reloads** – Lists the reloads of an app, newest first.
 - **Reload: Reload app** – Starts a reload of an app and returns the reload with its ID and status. If a full reload of the app is already waiting in the queue, that reload is returned, since it will load the latest data anyway. While another reload of the app is running, Qlik Cloud starts no new one; use Reload app and wait to wait for it.

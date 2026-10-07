@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.23.2';
+const CLIENT = 'n8n/1.23.3';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"getQlikConnection": {
@@ -626,7 +626,7 @@ export class AncoreMateReloads implements INodeType {
 						"name": "Get Many",
 						"value": "listReloadTasks",
 						"action": "List reload tasks",
-						"description": "Lists the reload schedules, optionally of one app, with their next run."
+						"description": "Lists the reload schedules, optionally of one app, with their next run. Schedules made in the hub or with tools that use Qlik's older reload tasks API appear only after Qlik Cloud has moved them to its Scheduling Tasks API."
 					},
 					{
 						"name": "Start",
