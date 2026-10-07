@@ -46,6 +46,7 @@ async function request(
 	qs: IDataObject,
 	body?: IDataObject | Buffer,
 	fileResponse = false,
+	read = method === 'GET',
 ): Promise<FullResponse> {
 	const file = Buffer.isBuffer(body);
 	const headers: IDataObject = { Accept: fileResponse ? '*/*' : 'application/json', 'X-AncoreMate-Client': client };
@@ -68,9 +69,10 @@ async function request(
 	}
 	const send = async () => (await this.helpers.httpRequestWithAuthentication.call(this, CREDENTIAL, options)) as FullResponse;
 	// A kept-alive connection that ancoreMate or its front end closed in the meantime fails once with ECONNRESET
-	// or "socket hang up". Reading requests (also the status checks of long-running actions) are sent once more,
-	// keeping the error of n8n otherwise; changing requests are not, since they may have arrived.
-	return method === 'GET'
+	// or "socket hang up". Reading requests (GET, the status checks of long-running actions, and reading actions
+	// sent as POST such as Evaluate expression) are sent once more, keeping the error of n8n otherwise; changing
+	// requests are not, since they may have arrived.
+	return read
 		? await send().catch(async (error: unknown) => (isClosedConnection(error) ? await send() : Promise.reject(error)))
 		: await send();
 }
@@ -106,7 +108,7 @@ async function send(
 	qs: IDataObject,
 	body?: IDataObject | Buffer,
 ): Promise<FullResponse> {
-	let response = await request.call(this, client, spec.method, baseUrl + path, qs, body, spec.fileOutput);
+	let response = await request.call(this, client, spec.method, baseUrl + path, qs, body, spec.fileOutput, spec.method === 'GET' || spec.read);
 	const started = Date.now();
 	while (spec.async && response.statusCode === 202) {
 		const location = header(response, 'location');
