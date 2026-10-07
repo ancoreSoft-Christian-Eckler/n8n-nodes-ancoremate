@@ -66,7 +66,26 @@ async function request(
 	if (body !== undefined) {
 		options.body = body;
 	}
-	return (await this.helpers.httpRequestWithAuthentication.call(this, CREDENTIAL, options)) as FullResponse;
+	const send = async () => (await this.helpers.httpRequestWithAuthentication.call(this, CREDENTIAL, options)) as FullResponse;
+	// A kept-alive connection that ancoreMate or its front end closed in the meantime fails once with ECONNRESET
+	// or "socket hang up". Reading requests (also the status checks of long-running actions) are sent once more,
+	// keeping the error of n8n otherwise; changing requests are not, since they may have arrived.
+	return method === 'GET'
+		? await send().catch(async (error: unknown) => (isClosedConnection(error) ? await send() : Promise.reject(error)))
+		: await send();
+}
+
+/** Whether an error (or one of its causes) says that the connection was closed before an answer came. */
+function isClosedConnection(error: unknown): boolean {
+	let current: unknown = error;
+	for (let depth = 0; current !== undefined && current !== null && depth < 5; depth++) {
+		const value = current as { code?: unknown; message?: unknown; cause?: unknown };
+		if (/ECONNRESET|EPIPE|socket hang up|closed unexpectedly/i.test(`${String(value.code ?? '')} ${String(value.message ?? '')}`)) {
+			return true;
+		}
+		current = value.cause;
+	}
+	return false;
 }
 
 function header(response: FullResponse, name: string): string | undefined {
