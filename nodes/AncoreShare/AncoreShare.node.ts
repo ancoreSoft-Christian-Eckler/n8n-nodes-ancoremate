@@ -11,7 +11,7 @@ import { NodeConnectionTypes } from 'n8n-workflow';
 import { loadOptions, runOperations, type OperationSpec } from '../shared/runtime';
 
 const BASE_URL = 'https://ancorecloud.com/ancoremate';
-const CLIENT = 'n8n/1.23.8';
+const CLIENT = 'n8n/1.23.9';
 
 const OPERATIONS: Record<string, OperationSpec> = {
 	"downloadAncoreShareFile": {
@@ -925,7 +925,7 @@ export class AncoreShare implements INodeType {
 						"name": "select",
 						"type": "string",
 						"default": "",
-						"description": "Selections to apply before the report runs, in the format of ancoreShare."
+						"description": "Selections to apply before the report runs: one field with its values (Region,North,South), or for several fields the select=… part of the ancoreShare execution link (select=Region,North&select=Year,2026)."
 					},
 					{
 						"displayName": "Notification",
