@@ -75,7 +75,7 @@ export class AncoreMateOAuth2Api implements ICredentialType {
 			"baseURL": "https://ancorecloud.com/ancoremate",
 			"url": "/v1/connection",
 			"headers": {
-				"X-AncoreMate-Client": "n8n/1.23.7"
+				"X-AncoreMate-Client": "n8n/1.23.8"
 			}
 		}
 	};

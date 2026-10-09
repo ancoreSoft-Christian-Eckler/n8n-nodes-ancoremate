@@ -491,8 +491,13 @@ export async function loadOptions(
 	try {
 		response = (await request.call(this, client, 'GET', baseUrl + path, query)).body as IDataObject | undefined;
 	} catch (error) {
-		// n8n shows this message at the field; the ancoreMate message says what to do, for example sign in again.
-		throw new NodeOperationError(this.getNode(), ancoreMateMessage(error) ?? (error as Error).message);
+		// n8n shows only "Error fetching options" for a failed list, so the message that says what to do (for
+		// example sign in again) becomes the only entry of the list; it has no value and cannot be used.
+		const message = ancoreMateMessage(error);
+		if (message !== undefined) {
+			return [{ name: message, value: '' }];
+		}
+		throw new NodeOperationError(this.getNode(), (error as Error).message);
 	}
 	const entries = ((response?.[collection] as IDataObject[] | undefined) ?? []);
 	return entries
