@@ -487,7 +487,13 @@ export async function loadOptions(
 			query[name] = value as string;
 		}
 	}
-	const response = (await request.call(this, client, 'GET', baseUrl + path, query)).body as IDataObject | undefined;
+	let response: IDataObject | undefined;
+	try {
+		response = (await request.call(this, client, 'GET', baseUrl + path, query)).body as IDataObject | undefined;
+	} catch (error) {
+		// n8n shows this message at the field; the ancoreMate message says what to do, for example sign in again.
+		throw new NodeOperationError(this.getNode(), ancoreMateMessage(error) ?? (error as Error).message);
+	}
 	const entries = ((response?.[collection] as IDataObject[] | undefined) ?? []);
 	return entries
 		.map((entry) => ({
